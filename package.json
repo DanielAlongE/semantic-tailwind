@@ -19,5 +19,8 @@
   "homepage": "https://github.com/DanielAlongE/semantic-tailwind#readme",
   "devDependencies": {
     "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "tailwindcss": "^1.6.2"
   }
 }
