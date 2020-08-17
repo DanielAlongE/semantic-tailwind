@@ -75,8 +75,8 @@ function objToCss(obj: Record<string, any>, level:number = -1){
 
 }
 
-const config: Tailwind = { text:{
-  color:"blue-600"
+const config: Tailwind = { text:{ 
+
 }}
 
 
