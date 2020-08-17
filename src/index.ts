@@ -1,3 +1,5 @@
+import Tailwind from "./types/tailwind"
+
 const autoprefixer = require('autoprefixer')
 const postcss = require('postcss')
 const precss = require('precss')
@@ -72,6 +74,10 @@ function objToCss(obj: Record<string, any>, level:number = -1){
   return result;
 
 }
+
+const config: Tailwind = { text:{
+  color:"blue-600"
+}}
 
 
   console.log(objToCss(cssObj))
