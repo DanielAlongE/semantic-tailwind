@@ -1,4 +1,5 @@
 import Tailwind from "./types/tailwind"
+import { isObject } from "util"
 
 const autoprefixer = require('autoprefixer')
 const postcss = require('postcss')
@@ -30,9 +31,7 @@ const cssObj = {
   }
 }
 
-function isObject(obj:unknown): boolean {
-  return (obj instanceof Object)
-}
+
 
 function deplicateStr(str:string, times:number){
   return Array(times).fill(str).join("")
