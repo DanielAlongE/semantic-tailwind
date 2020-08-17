@@ -38,6 +38,14 @@ function deplicateStr(str:string, times:number){
   return Array(times).fill(str).join("")
 }
 
+function tailwindObjToString(obj: Tailwind){
+  let result = "";
+
+  for(let key in obj){
+
+  }
+}
+
 function objToCss(obj: Record<string, any>, level:number = -1){
   level += 1;
   let result = "";
@@ -75,9 +83,12 @@ function objToCss(obj: Record<string, any>, level:number = -1){
 
 }
 
-const config: Tailwind = { text:{ 
-
-}}
+const config: Tailwind = { 
+  text: { 
+  color:"pink-300",
+  opacity: 25
+  }
+}
 
 
   console.log(objToCss(cssObj))
