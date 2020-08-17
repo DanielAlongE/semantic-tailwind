@@ -1,5 +1,6 @@
 import Tailwind from "./types/tailwind"
 import { isObject } from "util"
+import parser from "./parser"
 
 const autoprefixer = require('autoprefixer')
 const postcss = require('postcss')
@@ -82,7 +83,7 @@ function objToCss(obj: Record<string, any>, level:number = -1){
 
 }
 
-const config: Tailwind = { 
+const testTailwind: Tailwind = { 
   text: { 
   color:"pink-300",
   opacity: 25
@@ -90,7 +91,7 @@ const config: Tailwind = {
 }
 
 
-  console.log(objToCss(cssObj))
+  console.log(parser(testTailwind))
 
 
 /*
