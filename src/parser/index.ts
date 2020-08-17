@@ -6,9 +6,8 @@ export default function(tailwindObj: Tailwind): string {
     
     return Object.entries(tailwindObj).map( ([k, value]) => {
         const key = (isString(k) ? k : "") as string;
-        console.log("looing for key ",k, key)
+        
         if(key in register){
-            console.log("found key ", key)
             const fn = register[key];
             return fn(value);
         }

@@ -86,7 +86,11 @@ function objToCss(obj: Record<string, any>, level:number = -1){
 const testTailwind: Tailwind = { 
   text: { 
   color:"pink-300",
-  opacity: 25
+  opacity: 25,
+  wordBreak: "truncate",
+  align: "center",
+  transform: "capitalize",
+  whitespace: "no-wrap"
   }
 }
 
