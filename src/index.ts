@@ -91,6 +91,9 @@ const testTailwind: Tailwind = {
   align: "center",
   transform: "capitalize",
   whitespace: "no-wrap"
+  },
+  screen: {
+    sm:{text:{color:"blue-800"}}
   }
 }
 

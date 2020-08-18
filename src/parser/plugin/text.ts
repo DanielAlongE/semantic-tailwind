@@ -1,7 +1,7 @@
 import Text from "../../types/text"
 
 export default function(obj: Text): string {
-        console.log("pasering text")
+    
     return Object.entries(obj).map( ([key, value]) => {
 
         if(['opacity'].includes(key)){
