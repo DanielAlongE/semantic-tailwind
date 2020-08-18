@@ -5,19 +5,19 @@ import parser from "./parser"
 const autoprefixer = require('autoprefixer')
 const postcss = require('postcss')
 const precss = require('precss')
+const tailwindcss = require('tailwindcss');
 const fs = require('fs')
-/*
-const processor = postcss( [precss, autoprefixer] )
+
+//@apply text-pink-300 text-opacity-25 truncate text-center capitalize whitespace-no-wrap sm:text-blue-800 md:text-orange-300 md:text-5xl md:leading-loose
+/**/
+const processor = postcss( [precss, autoprefixer, tailwindcss] )
 processor.process(`
 .btn{
-    color: #fff;
-
-    &:hover{
-        color: blue;
-    }
+  
+  @apply text-left sm:text-center md:text-right lg:text-justify xl:text-center
 }
-`).then((result:any) => console.log(result))
-*/
+`).then((result:any) => console.log(result.css))
+
 const cssObj = {
   btn: {
     "@apply": "bg-blue-500 text-white font-bold py-2 px-4 rounded",
@@ -93,12 +93,13 @@ const testTailwind: Tailwind = {
   whitespace: "no-wrap"
   },
   screen: {
-    sm:{text:{color:"blue-800"}}
+    sm:{text:{color:"blue-800"}},
+    md:{text:{color:"orange-300", fontSize:"5xl", lineHeight:"loose"}}
   }
 }
 
 
-  console.log(parser(testTailwind))
+  //console.log(parser(testTailwind))
 
 
 /*

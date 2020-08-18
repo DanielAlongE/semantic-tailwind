@@ -23,7 +23,7 @@ export default function(obj: Text): string {
             return `leading-${value}`
         }
 
-        return ` text-${value}`
+        return `text-${value}`
     }).join(" ")
 
 }
