@@ -10,11 +10,12 @@ const fs = require('fs')
 
 //@apply text-pink-300 text-opacity-25 truncate text-center capitalize whitespace-no-wrap sm:text-blue-800 md:text-orange-300 md:text-5xl md:leading-loose
 /**/
-const processor = postcss( [precss, autoprefixer, tailwindcss] )
+const processor = postcss( )
+
 processor.process(`
 .btn{
   
-  @apply text-left sm:text-center md:text-right lg:text-justify xl:text-center
+  text-left 
 }
 `).then((result:any) => console.log(result.css))
 
