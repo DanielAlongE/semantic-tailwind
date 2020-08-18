@@ -14,5 +14,5 @@ export default function(tailwindObj: Tailwind): string {
 
         return " blank ";
         
-    }).join("");
+    }).join(" ");
 }
