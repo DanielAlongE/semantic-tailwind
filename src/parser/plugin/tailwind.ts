@@ -1,4 +1,4 @@
-import Tailwind from "../../types/tailwind";
+import Tailwind from "../../types";
 import register from "../register";
 import { isString } from "../../lib/type-check";
 

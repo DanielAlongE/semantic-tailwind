@@ -1,4 +1,4 @@
-import Tailwind from "./types/tailwind"
+import Tailwind from "./types"
 import { isObject } from "util"
 import parser from "./parser"
 
