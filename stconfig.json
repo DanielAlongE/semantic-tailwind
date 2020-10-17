@@ -1,0 +1,20 @@
+{
+  "components":[
+  {
+    "name":"Button",
+    "as": "button",
+    "class": "",
+    "directives": {
+      "primary": "",
+      "secondary": "",
+      "color": {
+        "yellow": "",
+        "green": ""
+      }
+    },
+    "children": [
+      
+    ]
+   }
+  ]    
+}
