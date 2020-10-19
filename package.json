@@ -20,7 +20,10 @@
   },
   "homepage": "https://github.com/DanielAlongE/semantic-tailwind#readme",
   "devDependencies": {
+    "@babel/preset-typescript": "^7.12.1",
+    "@types/jest": "^26.0.14",
     "@types/react": "^16.9.53",
+    "jest": "^26.6.0",
     "typescript": "^3.9.7"
   },
   "dependencies": {
