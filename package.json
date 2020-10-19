@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "tsc": "tsc -p tsconfig.json",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "tailwind": "tailwindcss build .\\src\\css\\_style.css -o .\\src\\css\\style.css"
   },
   "repository": {
