@@ -1,12 +1,12 @@
-type DirectiveOption = string | Record<string, string>
+export type DirectiveOption = string | Record<string, string>
 
-type Directive = Record<string, DirectiveOption>
+export type Directives = Record<string, DirectiveOption>
 
-interface Component {
+export interface Component {
   name: string
   class: string
   as: string,
-  directives?: Directive[]
+  directives?: Directives
   children?: Component[]
 }
 export default interface StyleConfig {
