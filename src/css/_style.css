@@ -1,10 +1,5 @@
-@tailwind base;
+/* @tailwind base; */
 
+@tailwind components;
 
-.progress-bar.wrapper{
-    @apply shadow w-full bg-gray-200 mt-2;
-}
-
-.progress-bar{
-    @apply bg-red-500 text-xs leading-none py-1 text-center text-white;
-}
+@tailwind utilities;
