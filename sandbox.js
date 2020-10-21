@@ -32,4 +32,4 @@ function getResovedConfigObjects(){
   return resolveConfigObjects([userConfig, defaultConfig])
 }
 
-console.log( getResovedConfigObjects()['theme'] )
+console.log( getResovedConfigObjects()['theme']['backgroundColor'] )
