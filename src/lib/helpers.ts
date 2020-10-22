@@ -2,9 +2,12 @@ const path = require("path");
 const _resolveConfigObjects = require('tailwindcss/lib/util/resolveConfig').default
 const defaultConfig = require('tailwindcss/stubs/defaultConfig.stub.js')
 
-export function getUserConfigObj(dir=__dirname, file="tailwind.confg.js"){
+export function getUserConfigObj(filePath=""){
+  if(!filePath){
+    filePath = path.resolve(process.cwd(), "tailwind.config.js")
+  }
   try {
-    return require(path.resolve(dir, file));
+    return require(filePath)
   } catch (error) {
     return {}
   }
