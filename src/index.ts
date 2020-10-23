@@ -1,3 +1,4 @@
+import { getStyleObj } from "./lib/helpers";
 const { program } = require('commander');
 program.version('0.0.1');
 
@@ -16,8 +17,13 @@ program
   .option('--no-sauce', 'Remove sauce')
   .option('--cheese <flavour>', 'cheese flavour', 'mozzarella')
   .option('--no-cheese', 'plain with no cheese')
-  .action(({cheese, sauce}:{cheese: any, sauce:any}) => {
+  .option('-s, --style', 'print style')
+  .action(({cheese, sauce, style}:{cheese: any, sauce:any, style:string}) => {
+    if(style){
+      console.log(getStyleObj())
+    }else{
     console.log({cheese, sauce})
+    }
   })
   .parse(process.argv);
 
