@@ -9,6 +9,11 @@ export function read(filePath: string): string {
   
 }
 
-export function write(){
-
+export function write(filePath: string, data: string){
+  try {
+    fs.writeFileSync(filePath, data);
+    return true
+  } catch (error) {
+    return false
+  }
 }
