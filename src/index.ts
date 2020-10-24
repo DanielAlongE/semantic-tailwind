@@ -1,3 +1,4 @@
+import { write } from "./lib/file-handler";
 import { getStyleObj, resolveConfigObjects } from "./lib/helpers";
 import { typography } from "./lib/tailwind";
 const { program } = require('commander');
@@ -23,7 +24,8 @@ program
     if(style){
       const configObj = resolveConfigObjects()
       const result = typography(configObj)
-      console.log(result)
+      write("testing.json", JSON.stringify(result,null, 2))
+      //console.log(result, result.length)
     }else{
     console.log({cheese, sauce})
     }

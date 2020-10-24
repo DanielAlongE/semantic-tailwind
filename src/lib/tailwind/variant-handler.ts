@@ -12,7 +12,7 @@ function responsive(classNames: string[], configObj: TailwindConfig): string[] {
     const breakpoints = Object.keys(screens)
     const { separator = ":" } = configObj
     let result: string[] = [ ]
-
+    console.log('responsive', classNames.length)
     if(breakpoints.length){
       breakpoints.forEach( b => {
         classNames.forEach(c => {
@@ -47,23 +47,24 @@ export default function variantHandler(utilityName:UtilityKeys, classNames:strin
   const variantNames = configObj.variants[utilityName];
   let result: string[] = []
   const count = variantNames.length;
+  const debug: string[] = [utilityName]
   if(count > 0){
     for(let i=count-1; i>=0; i-=1){
       const currentVariant = variantNames[i]
       const vFunc = variants[currentVariant]
-
+      debug.push(currentVariant)
       if(!vFunc){
         continue
       }
 
       if(i == 0 && currentVariant === 'responsive'){
-        result = [ ...result, ...vFunc(result, configObj)]
+        result = [ ...result, ...vFunc([...result, ...classNames], configObj)]
       }else{
         result = [ ...result, ...vFunc(classNames, configObj)]
       }
-      
+
     }
   }
-
+  console.log(debug)
   return result
 }
