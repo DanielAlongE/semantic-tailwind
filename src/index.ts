@@ -1,4 +1,5 @@
-import { getStyleObj } from "./lib/helpers";
+import { getStyleObj, resolveConfigObjects } from "./lib/helpers";
+import { typography } from "./lib/tailwind";
 const { program } = require('commander');
 program.version('0.0.1');
 
@@ -20,7 +21,9 @@ program
   .option('-s, --style', 'print style')
   .action(({cheese, sauce, style}:{cheese: any, sauce:any, style:string}) => {
     if(style){
-      console.log(getStyleObj())
+      const configObj = resolveConfigObjects()
+      const result = typography(configObj)
+      console.log(result)
     }else{
     console.log({cheese, sauce})
     }

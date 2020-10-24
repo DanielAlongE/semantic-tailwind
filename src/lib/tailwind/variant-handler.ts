@@ -1,4 +1,4 @@
-import TailwindConfig from "../../types/tailwindConfig"
+import TailwindConfig, { UtilityKeys } from "../../types/tailwindConfig"
 
 function namedVariant(name: string){
   return (classNames: string[], configObj: TailwindConfig): string[] => {
@@ -11,23 +11,21 @@ function responsive(classNames: string[], configObj: TailwindConfig): string[] {
     const screens = configObj.theme.screens || {}
     const breakpoints = Object.keys(screens)
     const { separator = ":" } = configObj
+    let result: string[] = [ ]
 
     if(breakpoints.length){
-      let result: string[] = []
-
       breakpoints.forEach( b => {
         classNames.forEach(c => {
           result.push(`${b}${separator}${c}`)
         })
       })
-      return result
-    }else{
-      return classNames
     }
+    
+    return result
     
   }
 
-export default {
+export const variants = {
   responsive,
   hover: namedVariant('hover'),
   focus: namedVariant('focus'),
@@ -43,4 +41,29 @@ export default {
   "group-focus": namedVariant('group-focus'),
   "focus-within": namedVariant('focus-within'),
   "focus-visible": namedVariant('focus-visible'),
+}
+
+export default function variantHandler(utilityName:UtilityKeys, classNames:string[], configObj: TailwindConfig): string[] {
+  const variantNames = configObj.variants[utilityName];
+  let result: string[] = []
+  const count = variantNames.length;
+  if(count > 0){
+    for(let i=count-1; i>=0; i-=1){
+      const currentVariant = variantNames[i]
+      const vFunc = variants[currentVariant]
+
+      if(!vFunc){
+        continue
+      }
+
+      if(i == 0 && currentVariant === 'responsive'){
+        result = [ ...result, ...vFunc(result, configObj)]
+      }else{
+        result = [ ...result, ...vFunc(classNames, configObj)]
+      }
+      
+    }
+  }
+
+  return result
 }
