@@ -3,39 +3,108 @@
   <header>
     <title>Test</title>
     <style>
-      label {
-        color: blue;
-        display: block;
+      *, *::before, *::after {
+        box-sizing: inherit;
       }
 
-      input[type=checkbox] {
-        opacity: 0;
-        padding: absolute;
+      html {
+        box-sizing: border-box;
+        background: pink;
+        padding: 20px 50px;
+      }
+
+      form {
+        margin: 1rem auto;
+        max-width: 750px;
+      }
+
+      .wrapper {
+        position: relative;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .wrapper label {
+        display: block;
+        padding: 12px 0 12px 48px;
+      }
+
+      label {
+        color: blue;
+      }
+
+      .wrapper input {
+        height: 40px;
+        width: 40px;
+        opacity: 0.5;
+        position: absolute;
         left: 0;
         top: 0;
       }
 
-      label > input::before {
-        content: "[]";
-        
+      .wrapper input + label::before {
+        border: 2px solid;
+        content: "";
+        height: 40px;
+        width: 40px;
+        position: absolute;
+        border-radius: 20px;
+        left: 0;
+        top: 0;
+
+      }
+
+/*
+      .wrapper input + label::after {
+        border: 2px solid;
+        content: "";
+        height: 20px;
+        width: 12px;
+        position: absolute;
+        left: 14;
+        top: 6;
+        border-top: 0;
+        border-left: 0;
+        transform: rotate(45deg);
+      }
+
+*/      
+      
+      .wrapper input + label::after {
+        border: 2px solid;
+        content: "";
+        border-left: 0;
+        border-top: 0;
+        height: 20px;
+        width: 12px;
+        opacity: 0;
+        position: absolute;
+        left: 14px;
+        top: 6px;
+        transform: rotate(45deg);
+        transition: opacity 0.2s ease-in-out;
+      }
+      
+
+      .wrapper input:checked + label::after {
+        opacity: 1;
       }
     </style>
   </header>
   <body>
     <h1>Oops!</h1>
     <form>
-      <label>
-        <input type="checkbox" name="check1" />
-        Test One
-      </label>
-      <label>
-        <input type="checkbox" name="check1" />
-        Test Two
-      </label>
-      <label>
-        <input type="checkbox" name="check1" />
-        Test Three
-      </label>      
+      <div class="wrapper">
+        <input id="check-1" type="checkbox" name="check1" aria-labelledby="label-1" />
+        <label for="check-1" id="label-1">Test One</label>
+      </div>
+
+      <div class="wrapper">
+        <label>Nothing</label>
+      </div>
+      
+
+
     </form>
   </body>
 </html>
