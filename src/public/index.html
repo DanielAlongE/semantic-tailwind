@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <header>
+    <title>Test</title>
+    <style>
+      label {
+        color: blue;
+        display: block;
+      }
+
+      input[type=checkbox] {
+        opacity: 0;
+        padding: absolute;
+        left: 0;
+        top: 0;
+      }
+
+      label > input::before {
+        content: "[]";
+        
+      }
+    </style>
+  </header>
+  <body>
+    <h1>Oops!</h1>
+    <form>
+      <label>
+        <input type="checkbox" name="check1" />
+        Test One
+      </label>
+      <label>
+        <input type="checkbox" name="check1" />
+        Test Two
+      </label>
+      <label>
+        <input type="checkbox" name="check1" />
+        Test Three
+      </label>      
+    </form>
+  </body>
+</html>
