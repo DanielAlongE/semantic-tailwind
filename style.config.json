@@ -3,18 +3,19 @@
   {
     "name":"Button",
     "as": "button",
-    "class": "",
+    "baseClass": "py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1",
     "directives": {
-      "primary": "",
+      "primary": "bg-blue-500 text-white active:bg-blue-600 font-bold px-4 ",
       "secondary": "",
       "color": {
         "yellow": "",
         "green": ""
+      },
+      "uppercase": "uppercase",
+      "size": {
+        "mini": "text-xs"
       }
-    },
-    "children": [
-      
-    ]
+    }
    }
   ]    
 }
