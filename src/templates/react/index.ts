@@ -1,15 +1,17 @@
 import React from 'react';
+import { ComponentData } from '../../types/reactComponentBuilder'
 
-function computePropsAsDirectives(data, _props){
+
+function computePropsAsDirectives(data: ComponentData, _props: any){
   let classNames = ""
   let props = {}
 
-  
+
 
   return [classNames, props]
 }
 
-export default function ComponentBuilder(data){
+export default function ComponentBuilder(data: ComponentData){
   return React.forwardRef(({className, children, key, ...rest}:any, ref:unknown) => {
     let props:any = {}
 
