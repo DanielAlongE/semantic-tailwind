@@ -7,5 +7,5 @@ export interface ComponentData {
   name: string
   as?: string
   baseClass: ClassProp
-  directives?: Directive
+  directives?: Record<string, Directive | ClassProp>
 }
