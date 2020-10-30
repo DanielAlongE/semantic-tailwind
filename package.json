@@ -16,7 +16,7 @@
     "type": "git",
     "url": "git+https://github.com/DanielAlongE/semantic-tailwind.git"
   },
-  "keywords": [],
+  "keywords": ["ui", "tailwindcss", "semantic", "react"],
   "files": [
     "dist/"
   ],
