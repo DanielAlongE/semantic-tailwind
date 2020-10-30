@@ -1,5 +1,5 @@
-import { isString, isObject } from '../../lib/type-check';
-import { ComponentData } from '../../types/reactComponentBuilder'
+import { isString, isObject } from '../lib/type-check';
+import { ComponentData } from '../types/reactComponentFactory'
 
 function getClassNames(key:string, value:any, directives: ComponentData['directives']): string {
   let classNames = ""

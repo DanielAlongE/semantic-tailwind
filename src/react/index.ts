@@ -1,13 +1,13 @@
 import React from 'react';
-import { ComponentData } from '../../types/reactComponentBuilder'
+import { ComponentData } from '../types/reactComponentFactory'
 import { computePropsAsDirectives } from './helper'
  
-export default function ComponentBuilder(data: ComponentData){
+export function ComponentFactory(data: ComponentData){
   return React.forwardRef(({className, children, key, ...rest}:any, ref:unknown) => {
     const props: any = {}
 
     // componentType
-    const comp = data.as || "button"
+    const comp = data.as || "div"
      
 
     if(key){

@@ -1,4 +1,4 @@
-import { computePropsAsDirectives } from "../templates/react/helper"
+import { computePropsAsDirectives } from "../react/helper"
 // test('adds 1 + 2 to equal 3', () => {
 //   const tailwindcss = require('tailwindcss');
 //   console.log(tailwindcss.process())
