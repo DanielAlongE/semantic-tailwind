@@ -1,9 +1,14 @@
 import React from 'react';
 import { ComponentData } from '../../types/reactComponentBuilder'
-
+import { computePropsAsDirectives } from './helper'
+ 
 export default function ComponentBuilder(data: ComponentData){
   return React.forwardRef(({className, children, key, ...rest}:any, ref:unknown) => {
-    let props:any = {}
+    const props: any = {}
+
+    // componentType
+    const comp = data.as || "button"
+     
 
     if(key){
       props['key'] = key
@@ -14,7 +19,8 @@ export default function ComponentBuilder(data: ComponentData){
     }
 
     // const tailwindcss = computeClasses(rest)
+    const [cls, _props] = computePropsAsDirectives(data, rest)
     
-    return React.createElement("button", {...props, ...rest, className}, children )
+    return React.createElement(comp, {...props, ..._props, ...rest, className: `${className} ${cls}`}, children )
   });
 }

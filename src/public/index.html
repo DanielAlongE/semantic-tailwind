@@ -88,6 +88,10 @@
         transition: opacity 0.2s ease-in-out;
       }
       
+      .wrapper input:focus + label {
+        border: 1px solid #eee;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+      }
 
       .wrapper input:checked + label::after {
         opacity: 1;
@@ -134,7 +138,18 @@
           
           return React.createElement("button", {...props, ...rest, className}, children )
         });
-        ReactDOM.render(<Button tabIndex={0} className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1">Click Me</Button>, document.getElementById('mydiv'))
+
+        function Sample(){
+          return(
+            <div>
+              {Array(10).fill(null).map((_,i) => {
+                return <Button ref={console.log} key={`btn-${i}`} tabIndex={0} className="bg-blue-500 text-white active:bg-blue-900 focus:bg-blue-300 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 focus:opacity-50">Click {i}</Button>
+              })}
+            </div>
+          )
+        }
+
+        ReactDOM.render(<Sample />, document.getElementById('mydiv'))
       </script>
 
     </form>
