@@ -4,7 +4,7 @@ import { computePropsAsDirectives } from './helper'
  
 export function ComponentFactory(data: ComponentData){
   return React.forwardRef((props:any = {}, ref:unknown) => {
-    const {className, children, key, ...rest} = props
+    const {className="", children, key, ...rest} = props
     //:{className?:string, children?:any, key?:string, rest?:any}
 
     const p: any = {}
