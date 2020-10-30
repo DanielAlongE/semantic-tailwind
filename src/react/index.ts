@@ -3,24 +3,27 @@ import { ComponentData } from '../types/reactComponentFactory'
 import { computePropsAsDirectives } from './helper'
  
 export function ComponentFactory(data: ComponentData){
-  return React.forwardRef(({className, children, key, ...rest}:any, ref:unknown) => {
-    const props: any = {}
+  return React.forwardRef((props:any = {}, ref:unknown) => {
+    const {className, children, key, ...rest} = props
+    //:{className?:string, children?:any, key?:string, rest?:any}
+
+    const p: any = {}
 
     // componentType
     const comp = data.as || "div"
      
 
     if(key){
-      props['key'] = key
+      p['key'] = key
     }
 
     if(ref){
-      props['ref'] = ref
+      p['ref'] = ref
     }
 
     // const tailwindcss = computeClasses(rest)
     const [cls, _props] = computePropsAsDirectives(data, rest)
     
-    return React.createElement(comp, {...props, ..._props, ...rest, className: `${className} ${cls}`}, children )
+    return React.createElement(comp, {...p, ..._props, ...rest, className: `${className} ${cls}`}, children )
   });
 }

@@ -2,9 +2,10 @@
 
 // import { write } from "../lib/file-handler";
 import { getStyleObj, resolveConfigObjects } from "../lib/helpers";
-import * as program from 'commander';
 import { typography } from "../lib/tailwind";
 
+const { Command } = require('commander');
+const program = new Command();
 
 program.version('0.0.1');
 
@@ -35,6 +36,7 @@ program
     else if(test){
       console.log("------ test ------")
       console.log(process.cwd())
+      console.log()
     }
   })
   .parse(process.argv);
