@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
-import { write } from "../lib/file-handler";
+// import { write } from "../lib/file-handler";
 import { getStyleObj, resolveConfigObjects } from "../lib/helpers";
+import * as program from 'commander';
 import { typography } from "../lib/tailwind";
-const { program } = require('commander');
+
+
 program.version('0.0.1');
 
 // program
@@ -17,24 +19,27 @@ program.version('0.0.1');
 // program.parse(process.argv);
 
 program
-  .option('--sauce <flavour>', 'sauce flavour', 'peperoni')
-  .option('--no-sauce', 'Remove sauce')
-  .option('--cheese <flavour>', 'cheese flavour', 'mozzarella')
-  .option('--no-cheese', 'plain with no cheese')
+  // .option('--sauce <flavour>', 'sauce flavour', 'peperoni')
+  // .option('--no-sauce', 'Remove sauce')
+  // .option('--cheese <flavour>', 'cheese flavour', 'mozzarella')
+  // .option('--no-cheese', 'plain with no cheese')
   .option('-s, --style', 'print style')
-  .action(({cheese, sauce, style}:{cheese: any, sauce:any, style:string}) => {
+  .option('-t, --test', 'test app')
+  .action(({test, style}:{test: any, style:string}) => {
     if(style){
       const configObj = resolveConfigObjects()
       const result = typography(configObj)
-      write("testing.json", JSON.stringify(result,null, 2))
-      //console.log(result, result.length)
-    }else{
-    console.log({cheese, sauce})
+      // write("testing.json", JSON.stringify(result,null, 2))
+      console.log(result, result.length)
+    }
+    else if(test){
+      console.log("------ test ------")
+      console.log(process.cwd())
     }
   })
   .parse(process.argv);
 
 
-if (program.cheese === undefined) console.log('no cheese');
-else if (program.cheese === true) console.log('add cheese');
-else console.log(`add cheese type ${program.cheese}`);
+// if (program.cheese === undefined) console.log('no cheese');
+// else if (program.cheese === true) console.log('add cheese');
+// else console.log(`add cheese type ${program.cheese}`);

@@ -1,6 +1,6 @@
 {
   "name": "semantic-tailwind",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "dist/index.js",
   "source": "src/index.ts",
@@ -16,7 +16,12 @@
     "type": "git",
     "url": "git+https://github.com/DanielAlongE/semantic-tailwind.git"
   },
-  "keywords": ["ui", "tailwindcss", "semantic", "react"],
+  "keywords": [
+    "ui",
+    "tailwindcss",
+    "semantic",
+    "react"
+  ],
   "files": [
     "dist/"
   ],
@@ -32,15 +37,15 @@
     "@types/jest": "^26.0.14",
     "@types/node": "^14.14.6",
     "@types/react": "^16.9.53",
-    "autoprefixer": "^10.0.1",
-    "babel-jest": "^26.6.0",
-    "commander": "^6.2.0",
     "jest": "^26.6.0",
-    "postcss-import": "^13.0.0",
-    "precss": "^4.0.0",
     "typescript": "^3.9.7"
   },
-  "dependencies": {},
+  "dependencies": {
+    "autoprefixer": "^10.0.1",
+    "commander": "^6.2.0",
+    "postcss-import": "^13.0.0",
+    "precss": "^4.0.0"
+  },
   "peerDependencies": {
     "tailwindcss": "^1.6.2",
     "react": "^16.14.0"
