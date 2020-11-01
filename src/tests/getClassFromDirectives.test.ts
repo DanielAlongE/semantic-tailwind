@@ -1,4 +1,4 @@
-import { computePropsAsDirectives } from "../react/helper"
+import { computePropsAsDirectives, darkModeClassSwap } from "../react/helper"
 // test('adds 1 + 2 to equal 3', () => {
 //   const tailwindcss = require('tailwindcss');
 //   console.log(tailwindcss.process())
@@ -30,4 +30,28 @@ test('check if string[] are valid classNames', () => {
   expect(cls).toContain("py-2")
   expect(cls).toContain("text-xs")
   expect(cls).toContain("bg-blue-500")
+});
+
+test('check if classNames remains the same', () => {
+  const classNames = "bg-blue-500 text-white active:bg-blue-900 focus:bg-blue-300 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 focus:opacity-50";
+  const cls = darkModeClassSwap([], classNames)
+  expect(cls).toBe(classNames)
+});
+
+test('check if darkMode swap happened', () => {
+  const classNames = "bg-blue-500 text-white active:bg-blue-900 focus:bg-blue-300 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 focus:opacity-50";
+  const cls = darkModeClassSwap([
+    ["bg-blue-500", "bg-black"],
+    ["text-white", "text-blue-500"],
+    ["bg-blue", "bg-gray"]
+  ], classNames)
+
+  const wordCount = (str: string, word: string): number => {
+    const arr = str.match(new RegExp(word, "g")) || []
+    return arr.length
+  } 
+
+  expect(cls).toContain("bg-black")
+  expect(cls).toContain("text-blue-500")
+  expect(wordCount(cls, "bg-gray")).toBe(2)
 });

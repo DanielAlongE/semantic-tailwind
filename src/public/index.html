@@ -143,9 +143,10 @@
         function Sample(){
           return(
             <div>
-              {Array(10).fill(null).map((_,i) => {
+              {Array(3).fill(null).map((_,i) => {
                 return <Button ref={console.log} key={`btn-${i}`} tabIndex={0} className="bg-blue-500 text-white active:bg-blue-900 focus:bg-blue-300 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 focus:opacity-50">Click {i}</Button>
               })}
+              <Button tabIndex={0} className="bg-black text-blue-500 active:bg-gray-900 focus:bg-gray-300 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 focus:opacity-50">Click Dark</Button>
             </div>
           )
         }
