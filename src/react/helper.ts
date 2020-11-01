@@ -3,8 +3,8 @@
 import { isString, isObject } from '../lib/type-check';
 import { ComponentData } from '../types/reactComponentFactory'
 
-export function handleComputed(computeStr:string, value:string ): string{
-  return computeStr.replace(new RegExp("#", "g"), value)
+export function handleComputed(computeExpression:string, value:string ): string{
+  return computeExpression.replace(new RegExp("#", "g"), value)
 }
 
 function getClassNames(key:string, value:any, directives: ComponentData['directives']): string {
