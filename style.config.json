@@ -1,21 +1,20 @@
 {
   "components":[
-  {
-    "name":"Button",
-    "as": "button",
-    "baseClass": "py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1",
-    "directives": {
-      "primary": "bg-blue-500 text-white active:bg-blue-600 font-bold px-4 ",
-      "secondary": "",
-      "color": {
-        "yellow": "",
-        "green": ""
-      },
-      "uppercase": "uppercase",
-      "size": {
-        "mini": "text-xs"
-      }
+    {
+      "name": "Button", 
+      "as":"button", 
+      "baseClass":["p-2"], 
+      "directives":{
+        "default":["bg-gray-500", "text-white"], 
+        "primary":["bg-blue-500", "text-white"], 
+        "basic":["bg-gray-500", "text-black"], 
+        "size":{
+          "mini":["text-xs"],
+          "small":["text-sm"],
+          "large":["text-lg"]
+        },
+        "rounded":["rounded"]
     }
-   }
+    }
   ]    
 }

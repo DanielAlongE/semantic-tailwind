@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
 import { ComponentData } from '../types/reactComponentFactory'
-import { computePropsAsDirectives, darkModeClassSwap } from './helper'
+import { getClassesAndProps, darkModeClassSwap } from './helper'
 
  
 export function ComponentFactory(data: ComponentData){
@@ -25,7 +25,7 @@ export function ComponentFactory(data: ComponentData){
     }
   
     // const tailwindcss = computeClasses(rest)
-    const [_className, _props] = computePropsAsDirectives(data, rest)
+    const [_className, _props] = getClassesAndProps(data, rest)
 
     let computedClassNames = `${_className} ${className}`
 

@@ -16,4 +16,4 @@ export function write(filePath: string, data: string){
   } catch (error) {
     return false
   }
-}
+} 

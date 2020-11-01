@@ -9,4 +9,5 @@ export interface ComponentData {
   baseClass: ClassProp
   directives?: Record<string, Directive | ClassProp>
   darkMode?: Array<[string, string]>
+  computed?: Record<string, string>
 }
