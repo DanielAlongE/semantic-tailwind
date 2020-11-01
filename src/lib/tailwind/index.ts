@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import Color from "../../types/color";
-import TailwindConfig, {Theme} from "../../types/tailwindConfig";
+import TailwindConfig from "../../types/tailwindConfig";
 import { isObject, isString } from "../type-check";
 import variantHandler from "./variant-handler";
 
 function getColorKeys(colors: Color): string[] {
-  let result: string[] = []
+  const result: string[] = []
   Object.entries(colors).forEach( ([key, value]) => {
     if(isString(value)){
       result.push(key)
@@ -18,7 +19,7 @@ function getColorKeys(colors: Color): string[] {
 
 export function typography( configObj: TailwindConfig ){
   let result: string[] = [];
-  const category = "Typography";
+  // const category = "Typography";
   
   // fontFamily
   const fontFamily = Object.keys(configObj.theme.fontFamily)
@@ -65,5 +66,5 @@ const plugins = []
 
 
 export default function tailwind(){
-
+  console.log("Hello")
 }
