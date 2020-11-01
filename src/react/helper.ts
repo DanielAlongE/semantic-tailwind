@@ -32,6 +32,12 @@ export function computePropsAsDirectives(data: ComponentData, _props: any): [str
   Object.entries(_props).forEach( ([propKey, propValue]) => {
     if(data.directives && Object.prototype.hasOwnProperty.call(data.directives, propKey)){
       classNames += " " + getClassNames(propKey, propValue, data.directives)
+
+      // pass prop to element if directive is a valid html attribute
+      if(["checked", "selected", "disabled", "readonly", "multiple", "ismap"].includes(propKey)){
+        props[propKey] = propValue
+      }
+
     }else{
       props[propKey] = propValue
     }

@@ -2,12 +2,12 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
 import { ComponentData } from '../types/reactComponentFactory'
-import { computePropsAsDirectives } from './helper'
+import { computePropsAsDirectives, darkModeClassSwap } from './helper'
 
  
 export function ComponentFactory(data: ComponentData){
   return React.forwardRef((props:any = {}, ref:unknown) => {
-    const {className="", children, key, ...rest} = props
+    const {className="", dark, children, key, ...rest} = props
     //:{className?:string, children?:any, key?:string, rest?:any}
   
     const p: any = {}
@@ -25,8 +25,14 @@ export function ComponentFactory(data: ComponentData){
     }
   
     // const tailwindcss = computeClasses(rest)
-    const [cls, _props] = computePropsAsDirectives(data, rest)
+    const [_className, _props] = computePropsAsDirectives(data, rest)
+
+    let computedClassNames = `${_className} ${className}`
+
+    if(dark && data.darkMode){
+      computedClassNames = darkModeClassSwap(data.darkMode, computedClassNames)
+    }
     
-    return React.createElement(comp, {...p, ..._props, ...rest, className: `${className} ${cls}`}, children )    
+    return React.createElement(comp, {...p, ..._props, ...rest, className: computedClassNames}, children )    
   });
 }
