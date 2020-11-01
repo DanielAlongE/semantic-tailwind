@@ -67,9 +67,14 @@ export function getClassesAndProps(data: ComponentData, _props: any): [string, R
   return [classNames, props]
 }
 
-export function darkModeClassSwap(swapList: ComponentData["darkMode"] = [], classNames: string): string {
-  swapList.forEach( ([findStr, replaceStr]) => {
-    classNames = classNames.replace(new RegExp(findStr, "g"), replaceStr)
+export function handleFilters(filterObj: ComponentData['filters'] = {}, props:any, classNames: string): string {
+  Object.entries(filterObj).forEach(([directive, filterArray]) => {
+    if(directive in props){
+      filterArray.forEach(([findStr, replaceStr]) => {
+        classNames = classNames.replace(new RegExp(findStr, "g"), replaceStr)
+      })
+    }
   })
+
   return classNames
 }

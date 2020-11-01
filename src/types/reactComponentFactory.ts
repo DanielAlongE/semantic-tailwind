@@ -8,6 +8,6 @@ export interface ComponentData {
   as?: string
   baseClass: ClassProp
   directives?: Record<string, Directive | ClassProp>
-  darkMode?: Array<[string, string]>
   computed?: Record<string, string>
+  filters?: Record<string, Array<[string, string]>>
 }

@@ -2,12 +2,12 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
 import { ComponentData } from '../types/reactComponentFactory'
-import { getClassesAndProps, darkModeClassSwap } from './helper'
+import { getClassesAndProps, handleFilters } from './helper'
 
  
 export function ComponentFactory(data: ComponentData){
   return React.forwardRef((props:any = {}, ref:unknown) => {
-    const {className="", dark, children, key, ...rest} = props
+    const {className="", children, key, ...rest} = props
     //:{className?:string, children?:any, key?:string, rest?:any}
   
     const p: any = {}
@@ -29,8 +29,8 @@ export function ComponentFactory(data: ComponentData){
 
     let computedClassNames = `${_className} ${className}`
 
-    if(dark && data.darkMode){
-      computedClassNames = darkModeClassSwap(data.darkMode, computedClassNames)
+    if(data.filters){
+      computedClassNames = handleFilters(data.filters, props, computedClassNames)
     }
     
     return React.createElement(comp, {...p, ..._props, ...rest, className: computedClassNames}, children )    

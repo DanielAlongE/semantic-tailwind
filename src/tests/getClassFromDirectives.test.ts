@@ -1,4 +1,4 @@
-import { getClassesAndProps, darkModeClassSwap, handleComputed } from "../react/helper"
+import { getClassesAndProps, handleComputed, handleFilters } from "../react/helper"
 // test('adds 1 + 2 to equal 3', () => {
 //   const tailwindcss = require('tailwindcss');
 //   console.log(tailwindcss.process())
@@ -60,29 +60,6 @@ test('check if computed directives work on string', () => {
   expect(cls).toContain("text-blue-500")
 });
 
-test('check if classNames remains the same', () => {
-  const classNames = "bg-blue-500 text-white active:bg-blue-900 focus:bg-blue-300 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 focus:opacity-50";
-  const cls = darkModeClassSwap([], classNames)
-  expect(cls).toBe(classNames)
-});
-
-test('check if darkMode swap happened', () => {
-  const classNames = "bg-blue-500 text-white active:bg-blue-900 focus:bg-blue-300 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 focus:opacity-50";
-  const cls = darkModeClassSwap([
-    ["bg-blue-500", "bg-black"],
-    ["text-white", "text-blue-500"],
-    ["bg-blue", "bg-gray"]
-  ], classNames)
-
-  const wordCount = (str: string, word: string): number => {
-    const arr = str.match(new RegExp(word, "g")) || []
-    return arr.length
-  } 
-
-  expect(cls).toContain("bg-black")
-  expect(cls).toContain("text-blue-500")
-  expect(wordCount(cls, "bg-gray")).toBe(2)
-});
 
 test('check if handleComputed stays unchanged without # ', () => {
   const cls = handleComputed("text-black", "blue-900")
@@ -93,4 +70,33 @@ test('check if handleComputed replaces #', () => {
   const cls = handleComputed("text-# bg-#", "blue-900")
   expect(cls).toContain("text-blue-900")
   expect(cls).toContain("bg-blue-900")
+});
+
+test('check if classNames remains the same with empty filter', () => {
+  const classNames = "bg-blue-500 text-white active:bg-blue-900 focus:bg-blue-300 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 focus:opacity-50";
+  const cls = handleFilters({},{dark: true}, classNames)
+  expect(cls).toBe(classNames)
+});
+
+test('check if handleFilters replaces works as expected', () => {
+  const cls = handleFilters(
+    {
+      dark: [
+      ["bg-blue-500", "bg-black"],
+      ["text-white", "text-blue-500"],
+      ["bg-blue", "bg-gray"]
+    ]
+    }, 
+      {dark: true}, 
+      "bg-blue-500 text-white active:bg-blue-900 focus:bg-blue-300 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 focus:opacity-50"
+    )
+
+  const wordCount = (str: string, word: string): number => {
+    const arr = str.match(new RegExp(word, "g")) || []
+    return arr.length
+  } 
+
+  expect(cls).toContain("bg-black")
+  expect(cls).toContain("text-blue-500")
+  expect(wordCount(cls, "bg-gray")).toBe(2)
 });
