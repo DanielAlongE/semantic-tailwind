@@ -37,6 +37,17 @@ test('check if string[] are valid classNames', () => {
   expect(cls).toContain("bg-blue-500")
 });
 
+test('check if skipList works', () => {
+  const [cls, props] = getClassesAndProps({
+    name:"test", baseClass:["py-2"], 
+    directives:{primary:["bg-blue-500"], size:{mini:["text-xs"]}}}, 
+    {primary:true, size:"mini"},
+    ['primary', 'size']
+    )
+  expect(Object.keys(props).length).toBe(0)
+  expect(cls).toBe("py-2")
+});
+
 test('check if findMatch returns false', () => {
   const [isMatch, directives] = findMatch("", {dark:true, color:"red"})
   expect(isMatch).toBe(false)
