@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
 import { ComponentData } from '../types/reactComponentFactory'
-import { getClassesAndProps, handleFilters, handleReferences } from './helper'
+import { getClassesAndProps, handleFilters, handleMatched, handleReferences } from './helper'
 
  
 export function ComponentFactory(data: ComponentData){
@@ -26,11 +26,21 @@ export function ComponentFactory(data: ComponentData){
     if(ref){
       p['ref'] = ref
     }
+
+    let computedClassNames = ""
+    let skipList: string[] = []
+
+    // handle matched props
+    if(data.matched){
+      const [s, matchedClassNames] = handleMatched(data.matched, props)
+      skipList = [...s]
+      computedClassNames += ` ${matchedClassNames}`
+    }
   
     // const tailwindcss = computeClasses(rest)
-    const [_className, _props] = getClassesAndProps(data, rest)
+    const [_className, _props] = getClassesAndProps(data, rest, skipList)
 
-    let computedClassNames = `${_className} ${className}`
+    computedClassNames += ` ${_className} ${className}`
 
     // match and replace references
     if(computedClassNames.indexOf("@") > -1){

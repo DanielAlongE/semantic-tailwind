@@ -1,4 +1,4 @@
-import { getClassesAndProps, findMatch, handleFilters, handleReferences } from "../react/helper"
+import { getClassesAndProps, findMatch, handleFilters, handleReferences, handleMatched } from "../react/helper"
 // test('adds 1 + 2 to equal 3', () => {
 //   const tailwindcss = require('tailwindcss');
 //   console.log(tailwindcss.process())
@@ -46,6 +46,26 @@ test('check if skipList works', () => {
     )
   expect(Object.keys(props).length).toBe(0)
   expect(cls).toBe("py-2")
+});
+
+test('check if matched props are computed', () => {
+  const props = {primary:true, size:"mini", color:'red', dark:true}
+  const [skipList, classNames] = handleMatched({
+      "primary,color:red,dark": "text-@color bg-black",
+      "color:red": "border-@color",
+      "size:mini": "@size"
+    }, props)
+
+  const [cls] = getClassesAndProps({
+    name:"test", baseClass:["py-2", classNames], 
+    directives:{primary:["bg-blue-500"], color:{red:"red-500"}, size:{mini:["text-xs"]}},
+  }, props, skipList)
+
+  expect(cls).toContain("py-2")
+  expect(cls).toContain("text-@color")
+  expect(cls).toContain("border-@color")
+  expect(cls).toContain("@size")
+  expect(cls).toContain("bg-black")
 });
 
 test('check if findMatch returns false', () => {
