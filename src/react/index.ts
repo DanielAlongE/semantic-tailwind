@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
 import { ComponentData } from '../types/reactComponentFactory'
-import { getClassesAndProps, handleFilters } from './helper'
+import { getClassesAndProps, handleFilters, handleReferences } from './helper'
 
  
 export function ComponentFactory(data: ComponentData){
@@ -14,6 +14,9 @@ export function ComponentFactory(data: ComponentData){
   
     // componentType
     const comp = data.as || "div"
+
+    // directives
+    const { directives= {} } = data
      
   
     if(key){
@@ -28,6 +31,12 @@ export function ComponentFactory(data: ComponentData){
     const [_className, _props] = getClassesAndProps(data, rest)
 
     let computedClassNames = `${_className} ${className}`
+
+    // match and replace references
+    if(computedClassNames.indexOf("@") > -1){
+      computedClassNames = handleReferences(directives, props, computedClassNames)
+    }
+    
 
     if(data.filters){
       computedClassNames = handleFilters(data.filters, props, computedClassNames)

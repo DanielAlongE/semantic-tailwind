@@ -1,4 +1,4 @@
-import { getClassesAndProps, handleComputed, handleFilters } from "../react/helper"
+import { getClassesAndProps, handleComputed, handleFilters, handleReferences } from "../react/helper"
 // test('adds 1 + 2 to equal 3', () => {
 //   const tailwindcss = require('tailwindcss');
 //   console.log(tailwindcss.process())
@@ -99,4 +99,28 @@ test('check if handleFilters replaces works as expected', () => {
   expect(cls).toContain("bg-black")
   expect(cls).toContain("text-blue-500")
   expect(wordCount(cls, "bg-gray")).toBe(2)
+});
+
+test('check if handleReference remains same without @reference', () => {
+  const className = "text-white"
+  const cls = handleReferences(
+    {dark: "bg-dark"}, 
+    {dark: true}, 
+    className
+    )
+
+  expect(cls).toBe(className)
+});
+
+test('check if handleReference modifies @references', () => {
+  const className = "bg-@color  @dark text-@size"
+  const cls = handleReferences(
+    {color: {default:"gray", red:"red", blue:"blue"}, dark:"text-black", size: {small:"sm"}}, 
+    {dark: true, size:"small"}, 
+    className
+  )
+
+    expect(cls).toContain("bg-gray")
+    expect(cls).toContain("text-black")
+    expect(cls).toContain("text-sm")
 });

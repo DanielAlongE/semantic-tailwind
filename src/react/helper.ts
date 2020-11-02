@@ -3,6 +3,7 @@
 import { isString, isObject } from '../lib/type-check';
 import { ComponentData } from '../types/reactComponentFactory'
 
+
 export function handleComputed(computeExpression:string, value:string ): string{
   return computeExpression.replace(new RegExp("#", "g"), value)
 }
@@ -77,4 +78,15 @@ export function handleFilters(filterObj: ComponentData['filters'] = {}, props:an
   })
 
   return classNames
+}
+
+export function handleReferences(directives: ComponentData['directives'] = {}, props:any, classNames: string): string {
+  const onMatch = (match: string): string => {
+    const key = match.slice(1, match.length)
+    const value = (key in props) ? props[key] : "default"
+    console.log(match, key, value)
+    return getClassNames(key, value, directives)
+  }
+
+  return classNames.replace(/@[a-zA-Z]+/g, onMatch)
 }
