@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { isString, isObject } from '../lib/type-check';
+import { isString, isObject, isBoolean } from '../lib/type-check';
 import { ComponentData } from '../types/reactComponentFactory'
 
 
@@ -101,15 +101,23 @@ export function findMatch(pattern: string, props: any): [boolean, string[]]{
   const result = rawArgs.map( x => {
     const [d,v] = x.split(":")
     
-    directives.push(d)
     if(d in props){
-      const propValueIsBoolean = (props[d] === true || props[d] === false)
+      directives.push(d)
+      if(v === undefined){
+        return isBoolean(props[d]) ? props[d] === true : true
+      }
+      else if(["true", "false"].includes(v)){
+        return v === "true" ? props[d] === true : props[d] === false
+      }
+      else{
+        return props[d] === v
+      }
     }
-    return (d in props) && (v!==undefined ? (props[d] === v) : true)
+    return false
   })
 
   const isMatched = result.every(x => x === true)
-
-  return [isMatched, directives]
+  
+  return [ isMatched, (isMatched ? directives : []) ]
 
 }

@@ -44,11 +44,12 @@ test('check if findMatch returns false', () => {
 });
 
 test('check if findMatch works as expected 1', () => {
-  const [isMatch, directives] = findMatch("primary,color:red,dark", {dark:true, color:"red", primary:false})
-  expect(isMatch).toBe(false)
+  const [isMatch, directives] = findMatch("primary:false,color:red,size,dark", {dark:true, color:"red", primary:false, size:"one"})
+  expect(isMatch).toBe(true)
   expect(directives).toContain("primary")
   expect(directives).toContain("dark")
   expect(directives).toContain("color")
+  expect(directives).toContain("size")
 });
 
 // test('check if computed directives work on string', () => {
