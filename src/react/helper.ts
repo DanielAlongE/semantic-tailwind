@@ -45,12 +45,15 @@ export function getClassesAndProps(data: ComponentData, _props: any, skipList: s
         // skip if directive was matched
         if(!skipList.includes(propKey)){
           result = getClassNames(propKey, propValue, directives)
+
+          // replace computed properties
+          const computedStr = data.computed && data.computed[propKey]
+          if(computedStr){
+            result = handleComputed(computedStr, result)
+          }
         }
       
-        const computedStr = data.computed && data.computed[propKey]
-        if(computedStr){
-          result = handleComputed(computedStr, result)
-        }      
+
 
       if(result){
         classNames += " " + result
