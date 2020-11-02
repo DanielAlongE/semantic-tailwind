@@ -1,4 +1,4 @@
-import { getClassesAndProps, findMatch, handleFilters, handleReferences, handleMatched } from "../react/helper"
+import { getClassesAndProps, findMatch, handleFilters, handleReferences, handleMatched, handleComputed } from "../react/helper"
 // test('adds 1 + 2 to equal 3', () => {
 //   const tailwindcss = require('tailwindcss');
 //   console.log(tailwindcss.process())
@@ -83,17 +83,39 @@ test('check if findMatch works as expected 1', () => {
   expect(directives).toContain("size")
 });
 
-// test('check if computed directives work on string', () => {
-//   const [cls] = getClassesAndProps({
-//     name:"test", 
-//     baseClass:"", 
-//     directives:{ color:{blue: "blue-500"}},
-//     computed: { color:"text-# bg-#"}
-//   },
-//     {color:"blue"})
-//   expect(cls).toContain("bg-blue-500")
-//   expect(cls).toContain("text-blue-500")
-// });
+test('check if computed directives work on boolean', () => {
+  const [cls] = getClassesAndProps({
+    name:"test", 
+    baseClass:"", 
+    directives:{ primary:["blue-500"]},
+    computed: { primary:"bg-#"}
+  },
+    {primary:true})
+  expect(cls).toContain("bg-blue-500")
+});
+
+test('check if handleComputed stays unchanged without # ', () => {
+  const cls = handleComputed("text-black", "blue-900")
+  expect(cls).toBe("text-black")
+});
+
+test('check if handleComputed replaces #', () => {
+  const cls = handleComputed("text-# bg-#", "blue-900")
+  expect(cls).toContain("text-blue-900")
+  expect(cls).toContain("bg-blue-900")
+});
+
+test('check if computed directives work on string', () => {
+  const [cls] = getClassesAndProps({
+    name:"test", 
+    baseClass:"", 
+    directives:{ color:{blue: "blue-500"}},
+    computed: { color:"text-# bg-#"}
+  },
+    {color:"blue"})
+  expect(cls).toContain("bg-blue-500")
+  expect(cls).toContain("text-blue-500")
+});
 
 
 test('check if classNames remains the same with empty filter', () => {

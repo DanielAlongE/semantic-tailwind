@@ -9,5 +9,6 @@ export interface ComponentData {
   baseClass: ClassProp
   directives?: Record<string, Directive | ClassProp>
   matched?: Record<string, string>
+  computed?: Record<string, string>
   filters?: Record<string, Array<[string, string]>>
 }
