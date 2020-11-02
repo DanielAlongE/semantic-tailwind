@@ -170,3 +170,14 @@ test('check if handleReference modifies @references', () => {
     expect(cls).toContain("text-black")
     expect(cls).toContain("text-sm")
 });
+
+test('check if handleReference receives prop', () => {
+  const className = "@color:blue"
+  const cls = handleReferences(
+    {color: {default:"gray", red:"red", blue:"blue"}, dark:"text-black", size: {small:"sm"}}, 
+    {dark: true, size:"small", color:"red"}, 
+    className
+  )
+
+    expect(cls).toBe("blue")
+});

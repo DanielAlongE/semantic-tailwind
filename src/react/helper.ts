@@ -91,13 +91,19 @@ export function handleFilters(filterObj: ComponentData['filters'] = {}, props:an
 
 export function handleReferences(directives: ComponentData['directives'] = {}, props:any, classNames: string): string {
   const onMatch = (match: string): string => {
-    const key = match.slice(1, match.length)
-    const value = (key in props) ? props[key] : "default"
+    const ref = match.slice(1, match.length)
+    const [key, val] = ref.split(":")
+    
+    const value = val ? 
+          val :
+          (key in props) ? props[key] :  "default"
+    
+    
     console.log(match, key, value)
     return getClassNames(key, value, directives)
   }
 
-  return classNames.replace(/@[a-zA-Z]+/g, onMatch)
+  return classNames.replace(/@[a-zA-Z:]+/g, onMatch)
 }
 
 export function findMatch(pattern: string, props: any): [boolean, string[]]{
