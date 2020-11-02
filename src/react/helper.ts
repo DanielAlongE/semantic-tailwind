@@ -28,7 +28,7 @@ function getClassNames(key:string, value:any, directives: ComponentData['directi
   return classNames
 }
 
-export function getClassesAndProps(data: ComponentData, _props: any): [string, Record<string, any>]{
+export function getClassesAndProps(data: ComponentData, _props: any, skipList: string[] = []): [string, Record<string, any>]{
   let classNames = ""
   const props: any = { }
   const { directives={}, baseClass } = data
@@ -38,13 +38,16 @@ export function getClassesAndProps(data: ComponentData, _props: any): [string, R
   classNames += Array.isArray(baseClass) ? baseClass.join("") : baseClass
 
   Object.entries(_props).forEach( ([propKey, propValue]) => {
-    if(directives && Object.prototype.hasOwnProperty.call(directives, propKey)){
-      let result = getClassNames(propKey, propValue, directives)
+    
+      if(directives && Object.prototype.hasOwnProperty.call(directives, propKey)){
+        let result = ""
+
+        // skip if directive was matched
+        if(!skipList.includes(propKey)){
+          result = getClassNames(propKey, propValue, directives)
+        }
       
-      const computedStr = data.computed && data.computed[propKey]
-      if(computedStr){
-        result = handleComputed(computedStr, result)
-      }
+      
 
       if(result){
         classNames += " " + result
@@ -89,4 +92,24 @@ export function handleReferences(directives: ComponentData['directives'] = {}, p
   }
 
   return classNames.replace(/@[a-zA-Z]+/g, onMatch)
+}
+
+export function findMatch(pattern: string, props: any): [boolean, string[]]{
+  const rawArgs = pattern.split(",")
+  const directives: string[] = []
+
+  const result = rawArgs.map( x => {
+    const [d,v] = x.split(":")
+    
+    directives.push(d)
+    if(d in props){
+      const propValueIsBoolean = (props[d] === true || props[d] === false)
+    }
+    return (d in props) && (v!==undefined ? (props[d] === v) : true)
+  })
+
+  const isMatched = result.every(x => x === true)
+
+  return [isMatched, directives]
+
 }
