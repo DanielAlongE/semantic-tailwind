@@ -22,25 +22,9 @@ const xyz = require("./dist/react/helper")
 // }, {dark:false, color:"red", primary:true}))
 
 console.log(
-  xyz.getClassesAndProps({
-    name:"test", baseClass:["py-2"], 
-    directives:{primary:["bg-blue-500"], color:{red:"red-500"}, size:{mini:["text-xs"]}},
-    matched: {
-      "primary,color:red,dark": "text-@color bg-black",
-    }
-  },
-    {primary:true, size:"mini", color:'red', dark:true})
-
+  xyz.handleReferences(
+    {primary:["bg-blue-500"], color:{yellow:"yellow-500", teal:"teal-500", red:"red-500"}, size:{mini:["text-xs"]}},
+    {primary:true, color:"teal", size:"mini", dark:true},
+    "@color"
+    )
 )
-
-// console.log(
-//   xyz.handleMatched(
-//     {
-//       "primary,color:red,dark": "text-@color bg-black",
-//       "color:red": "border-@color",
-//       "size:mini": "@size"      
-//     }
-//   ,
-//     {primary:true, size:"mini", color:'red', dark:true})
-
-// )

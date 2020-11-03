@@ -16,7 +16,13 @@ function getClassNames(key:string, value:any, directives: ComponentData['directi
     const currentDirective = directives[key]
 
     if(isObject(currentDirective) && isString(value)){
-      cls = (<any>currentDirective)[value] || ""
+      // check if default value exist || pick first element
+      if(value === "default" && !(value in <Record<string,any>>currentDirective)){
+        const k = Object.keys(currentDirective)
+        cls = k[0] ? (<any>currentDirective)[k[0]] : ""
+      }else{
+        cls = (<any>currentDirective)[value] || ""
+      }
     }
     else if(value){
       cls = <string | string[]>currentDirective || ""
@@ -94,10 +100,8 @@ export function handleReferences(directives: ComponentData['directives'] = {}, p
     const ref = match.slice(1, match.length)
     const [key, val] = ref.split(":")
     
-    const value = val ? 
-          val :
-          (key in props) ? props[key] :  "default"
-    
+    const value = val ? val :
+          (key in props) ? (props[key] || "default") : "default"
     
     console.log(match, key, value)
     return getClassNames(key, value, directives)
