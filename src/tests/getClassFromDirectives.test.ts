@@ -48,8 +48,43 @@ test('check if skipList works', () => {
   expect(cls).toBe("py-2")
 });
 
-test('check if matched props are computed', () => {
+test('check if matched props are computed 1', () => {
   const props = {primary:true, size:"mini", color:'red', dark:true}
+  const [skipList, classNames] = handleMatched({
+      "color:red": "border-@color",
+      "size:mini": "@size",
+      "primary,color:red,dark": "text-@color bg-black"
+    }, props)
+
+  const [cls] = getClassesAndProps({
+    name:"test", baseClass:["py-2", classNames], 
+    directives:{primary:["bg-blue-500"], color:{red:"red-500"}, size:{mini:["text-xs"]}},
+  }, props, skipList)
+
+  expect(cls).toContain("py-2")
+  expect(cls).toContain("text-@color")
+  expect(cls).toContain("bg-black")
+});
+
+test('check if matched props are computed 2', () => {
+  const props = {primary:false, size:"mini", color:'red', dark:true}
+  const [skipList, classNames] = handleMatched({
+      "primary,color:red,dark": "text-@color bg-black",
+      "color:red,dark": "border-@color",
+      "size:mini": "@size"
+    }, props)
+
+  const [cls] = getClassesAndProps({
+    name:"test", baseClass:["py-2", classNames], 
+    directives:{primary:["bg-blue-500"], color:{red:"red-500"}, size:{mini:["text-xs"]}},
+  }, props, skipList)
+
+  expect(cls).toContain("py-2")
+  expect(cls).toContain("border-@color")
+});
+
+test('check if matched props are computed 3', () => {
+  const props = {primary:false, size:"mini"}
   const [skipList, classNames] = handleMatched({
       "primary,color:red,dark": "text-@color bg-black",
       "color:red": "border-@color",
@@ -62,10 +97,7 @@ test('check if matched props are computed', () => {
   }, props, skipList)
 
   expect(cls).toContain("py-2")
-  expect(cls).toContain("text-@color")
-  expect(cls).toContain("border-@color")
   expect(cls).toContain("@size")
-  expect(cls).toContain("bg-black")
 });
 
 test('check if findMatch returns false', () => {

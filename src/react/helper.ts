@@ -135,17 +135,20 @@ export function findMatch(pattern: string, props: any): [boolean, string[]]{
 }
 
 export function handleMatched(matchedObj: ComponentData['matched'] = {}, props: any): [string[], string] {
-  const matchedProps: string[] = []
+  let matchedProps: string[] = []
   let classNames = "";
+  let rank = 0;
 
+  
   Object.entries(matchedObj).forEach(([pattern, expression]) => {
      const [isMatch, directives] = findMatch(pattern, props)
 
-     if(isMatch){
-      matchedProps.push(...directives)
-      classNames += ` ${expression}`
+     if(isMatch && directives.length > rank){
+      matchedProps = [...directives]
+      classNames = `${expression}`
+      rank = directives.length
      }
   })
 
-  return [ Array.from<string>(new Set<string>(matchedProps)), classNames ]
+  return [ matchedProps, classNames ]
 }
