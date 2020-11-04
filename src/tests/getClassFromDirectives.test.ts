@@ -213,3 +213,25 @@ test('check if handleReference receives prop', () => {
 
     expect(cls).toBe("blue")
 });
+
+test('check if handleReference returns first item with invalid prop', () => {
+  const className = "@color:fake"
+  const cls = handleReferences(
+    {color: {gray:"gray", red:"red", blue:"blue"}, dark:"text-black", size: {small:"sm"}}, 
+    {dark: true, size:"small", color:"red"}, 
+    className
+  )
+
+    expect(cls).toBe("gray")
+});
+
+test('check if handleReference returns default with invalid prop', () => {
+  const className = "@color:fake"
+  const cls = handleReferences(
+    {color: {default:"teal", red:"red", blue:"blue"}, dark:"text-black", size: {small:"sm"}}, 
+    {dark: true, size:"small", color:"red"}, 
+    className
+  )
+
+    expect(cls).toBe("teal")
+});

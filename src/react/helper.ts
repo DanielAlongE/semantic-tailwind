@@ -105,7 +105,7 @@ export function handleReferences(directives: ComponentData['directives'] = {}, p
     const value = val ? val :
           (key in props) ? (props[key] || "default") : "default"
     
-    console.log(match, key, value)
+    //console.log(match, key, value)
     return getClassNames(key, value, directives)
   }
 
