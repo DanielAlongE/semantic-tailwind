@@ -17,11 +17,13 @@ function getClassNames(key:string, value:any, directives: ComponentData['directi
 
     if(isObject(currentDirective) && isString(value)){
       // check if default value exist || pick first element
-      if(value === "default" && !(value in <Record<string,any>>currentDirective)){
-        const k = Object.keys(currentDirective)
-        cls = k[0] ? (<any>currentDirective)[k[0]] : ""
-      }else{
+      const allKeys = Object.keys(currentDirective)
+      const defaultKey = ("default" in <Record<string,any>>currentDirective) ? "default" : ((<any>currentDirective)[allKeys[0]] || "")
+      
+      if((value in <Record<string,any>>currentDirective)){
         cls = (<any>currentDirective)[value] || ""
+      }else{
+        cls = defaultKey ? (<any>currentDirective)[defaultKey] : ""
       }
     }
     else if(value){
