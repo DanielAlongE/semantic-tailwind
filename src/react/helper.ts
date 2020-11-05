@@ -139,12 +139,8 @@ export function findMatch(pattern: string, props: any): [boolean, string[]]{
   })
 
   const isMatched = result.every(x => x === true)
-
-  console.log(directives)
-  console.log(result)
   
   return [ isMatched, (isMatched ? directives : []) ]
-
 }
 
 export function handleMatched(matchedObj: ComponentData['matched'] = {}, props: any): [string[], string] {
