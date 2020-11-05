@@ -115,6 +115,13 @@ test('check if findMatch works as expected 1', () => {
   expect(directives).toContain("size")
 });
 
+test('check if findMatch works dims unsupplied prop as false', () => {
+  const [isMatch, directives] = findMatch("primary:false,color:false", {})
+  expect(isMatch).toBe(true)
+  expect(directives).toContain("primary")
+  expect(directives).toContain("color")
+});
+
 test('check if computed directives work on boolean', () => {
   const [cls] = getClassesAndProps({
     name:"test", 

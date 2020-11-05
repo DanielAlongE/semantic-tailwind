@@ -21,10 +21,14 @@ const xyz = require("./dist/react/helper")
 //   "color:red": "bg-@color"
 // }, {dark:false, color:"red", primary:true}))
 
+
 console.log(
-  xyz.handleReferences(
-    {primary:["bg-blue-500"], color:{yellow:"yellow-500", teal:"teal-500", red:"red-500"}, size:{mini:["text-xs"]}},
-    {primary:true, color:"teal", size:"mini", dark:true},
-    "@color"
-    )
+  //xyz.findMatch("primary:false,color:false,dark,size", {dark:123, size:true})
+  //xyz.findMatch("primary,color,size,dark", {dark:true, color:"red", primary:'', size:"one"})
+  // xyz.findMatch("primary:false,color,dark", {size:"mini", color:'red', dark:true})
+  xyz.handleMatched({
+    "primary,color:red,dark": "text-@color bg-black",
+    "color:red,dark": "border-@color",
+    "size:mini": "@size"
+  }, {primary:false, size:"mini", color:'red', dark:true})
 )
