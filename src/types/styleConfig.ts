@@ -1,14 +1,5 @@
-export type DirectiveOption = string | Record<string, string>
+import { ComponentData } from "./reactComponentFactory";
 
-export type Directives = Record<string, DirectiveOption>
-
-export interface Component {
-  name: string
-  class: string
-  as: string,
-  directives?: Directives
-  children?: Component[]
-}
 export default interface StyleConfig {
-  components: Component[]
+  components: ComponentData[]
 }

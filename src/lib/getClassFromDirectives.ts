@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { Directives } from "../types/styleConfig";
+import { Directives } from "../types/reactComponentFactory";
 import { isObject } from "./type-check";
 
 export default function getClassFromDirectives(props: any, directives: Directives): string {
