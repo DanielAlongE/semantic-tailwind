@@ -5,7 +5,7 @@ import { ComponentData } from '../types/reactComponentFactory'
 import { getClassesAndProps, handleFilters, handleMatched, handleReferences } from './helper'
 
  
-export function ComponentFactory(data: ComponentData){
+export function ComponentFactory(data: ComponentData, _comp?: React.FC<any>){
   return React.forwardRef((props:any = {}, ref:unknown) => {
     const {className="", children, key, ...rest} = props
     //:{className?:string, children?:any, key?:string, rest?:any}
@@ -13,7 +13,7 @@ export function ComponentFactory(data: ComponentData){
     const p: any = {}
   
     // componentType
-    const comp = data.as || "div"
+    const comp = _comp ? _comp : (data.as || "div")
 
     // directives
     const { directives= {} } = data
