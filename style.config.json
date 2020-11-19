@@ -1,20 +1,61 @@
 {
   "components":[
     {
-      "name": "Button", 
-      "as":"button", 
-      "baseClass":["p-2"], 
-      "directives":{
-        "default":["bg-gray-500", "text-white"], 
-        "primary":["bg-blue-500", "text-white"], 
-        "basic":["bg-gray-500", "text-black"], 
-        "size":{
-          "mini":["text-xs"],
-          "small":["text-sm"],
-          "large":["text-lg"]
-        },
-        "rounded":["rounded"]
+      "name": "Custom.One",
+      "baseClass": "",
+      "as": "div",
+      "directives": {
+        "primary": "",
+        "size": {
+          "mini": [
+            "text-xs"
+          ],
+          "small": [
+            "text-sm"
+          ],
+          "large": [
+            "text-lg"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Custom.Two",
+      "baseClass": "",
+      "as": "div",
+      "directives": {
+        "primary": "",
+        "size": {
+          "mini": [
+            "text-xs"
+          ],
+          "small": [
+            "text-sm"
+          ],
+          "large": [
+            "text-lg"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Custom.Three",
+      "baseClass": "",
+      "as": "div",
+      "directives": {
+        "primary": "",
+        "size": {
+          "mini": [
+            "text-xs"
+          ],
+          "small": [
+            "text-sm"
+          ],
+          "large": [
+            "text-lg"
+          ]
+        }
+      }
     }
-    }
-  ]    
+  ]   
 }

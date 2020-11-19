@@ -1,34 +1,48 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable no-undef */
-const xyz = require("./dist/react/helper")
-//onst path = require('path')
-//const Me = require("./dist/lib/helpers.js").resolveConfigObjects
-//{  } 
- 
-// require('C:\\Projects\\semantic-tailwind\\tailwind.confg.js')
-// console.log(path.relative(__dirname, "tailwind.confg.js"))
+const xyz = require("./dist/lib/templateMaker")
 
-// const { read, write } = require('./dist/lib/file-handler')
-// const json = read('C:\\Projects\\semantic-tailwind\\style.config.json')
-// const data = Me()
-// console.log( write('C:\\Projects\\semantic-tailwind\\sample.json', JSON.stringify(data, null, 2) ) )
+const tm = xyz.default()
+// import React, { useEffect, useRef, useState } from 'react'
+// import { useProvider, useSubscribedState, SubscribedState as S } from 'react-subscribed-state'
 
-// console.log(xyz.findMatch("color:blue", {dark:true, color:"red"}))
-// console.log(xyz.findMatch("primary,color:red,dark:false", {dark:false, color:"red", primary:true}))
+// tm.addImport("react").default("React")
+// tm.addImport("react").named(["useEffect", "useRef", "useState"])
 
-// console.log(xyz.handleMatched({
-//   "primary,color:red,dark:false": "text-@color bg-black",
-//   "color:red": "bg-@color"
-// }, {dark:false, color:"red", primary:true}))
+// console.log("\n\n", tm.addImport("react-subscribed-state").named(["useProvider", "useSubscribedState", "SubscribedState as S"]) )
+
+// tm.addImport("firebase").default("* as Firebase")
+
+// tm.addLine("")
+
+// tm.addLine("function Styled(){")
+// tm.addLine("return (", 1)
+// tm.addLine("<div>Hello</div>", 2)
+// tm.addLine(")", 1)
+// tm.addLine("}")
+
+// tm.toString()
 
 
-console.log(
-  //xyz.findMatch("primary:false,color:false,dark,size", {dark:123, size:true})
-  //xyz.findMatch("primary,color,size,dark", {dark:true, color:"red", primary:'', size:"one"})
-  // xyz.findMatch("primary:false,color,dark", {size:"mini", color:'red', dark:true})
-  xyz.handleMatched({
-    "primary,color:red,dark": "text-@color bg-black",
-    "color:red,dark": "border-@color",
-    "size:mini": "@size"
-  }, {primary:false, size:"mini", color:'red', dark:true})
-)
+tm.addImport("react")
+  .default("React")
+    .named(["useEffect", "useRef", "useState"])
+
+  .addImport("react-subscribed-state")
+    .named(["useProvider", "useSubscribedState", "SubscribedState as S"])
+    .named(["SubscribedState as Sos"])
+
+  .addImport("firebase")
+    .default("* as Firebase")
+
+  .addLine("")
+  .addLine("function Styled(){")
+.addMultiLine(`// comment 1
+// comment 2
+// comment 3
+`, 4)
+  .addLine("return (", 1)
+  .addLine("<div>Hello</div>", 2)
+  .addLine(")", 1)
+  .addLine("}")
+  .toString()
