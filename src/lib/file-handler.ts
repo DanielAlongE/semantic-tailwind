@@ -16,4 +16,13 @@ export function write(filePath: string, data: string){
   } catch (error) {
     return false
   }
-} 
+}
+
+export function stringToJson<T>(str: string, _default:unknown = {}){
+  try {
+    return <T>JSON.parse(str)
+  } catch (error) {
+    console.error(error)
+    return <T>_default
+  }
+}

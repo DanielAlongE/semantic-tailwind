@@ -56,6 +56,27 @@
           ]
         }
       }
+    },
+    {
+      "name": "Grid.Row",
+      "baseClass": "",
+      "as": "div",
+      "directives": {
+      }
+    },
+    {
+      "name": "Grid.Column",
+      "baseClass": "",
+      "as": "div",
+      "directives": {
+      }
+    },
+    {
+      "name": "Grid",
+      "baseClass": "",
+      "as": "div",
+      "directives": {
+      }
     }
   ]   
 }
