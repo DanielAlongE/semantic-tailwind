@@ -39,7 +39,7 @@ export default function templateMaker(){
   }
 
   const toString = () => {
-    return ( _processImports() + lines.join("\n") )
+    return ( _processImports() + "\n" + lines.join("\n") )
   }
 
   const addLine = (text:string, indentation = 0, space="  ") => {
