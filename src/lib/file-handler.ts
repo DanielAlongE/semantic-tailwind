@@ -26,3 +26,12 @@ export function stringToJson<T>(str: string, _default:unknown = {}){
     return <T>_default
   }
 }
+
+export function jsonToString(json: unknown, _default = "{}") {
+  try {
+    return JSON.stringify(json, null, 2)
+  } catch (error) {
+    console.error(error)
+    return _default
+  }
+}
