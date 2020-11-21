@@ -4,7 +4,7 @@ import * as fileHanler from "../lib/file-handler"
 import { ComponentData } from "../types/reactComponentFactory"
 import StyleConfig from "../types/styleConfig"
 import templateMaker from "../lib/templateMaker"
-import { isObject, isString } from "../lib/type-check"
+import { isObject, isString, isNumeric } from "../lib/type-check"
 
 function isDefaultComp(c:string){
   return c && c.indexOf(".") === -1
@@ -16,15 +16,20 @@ function directiveToTypes(comp: ComponentData){
   const directives = comp.directives || {}
 
   const objKeyToType = (obj: Record<string, unknown>) => {
-    const keyList = Object.keys(obj)
-    keyList.push("string")
-    return keyList.join(" |")
+    let keyList: Array<string | number> = Object.keys(obj)
+    const isAllNumbers = keyList.every( x => isNumeric(x))
+
+      keyList = keyList.map( k => {
+        return ["number", "string", "boolean"].includes(k as string) || isAllNumbers ? k : `'${k}'`
+      })
+
+    return keyList.join(" | ") + "\n"
   }
 
   Object.entries(directives).forEach( ([directive, value]) => {
     result += `${directive}?: `
     if(Array.isArray(value) || isString(value)){
-      result += "Boolean\n"
+      result += "boolean\n"
     }
     else if(isObject(value)){
       result += objKeyToType(<Record<string, unknown>>value)
@@ -37,8 +42,26 @@ function directiveToTypes(comp: ComponentData){
 
 function getComponentInterface(as: string){
   const dict = {
+    html: ["HTMLAttributes", "react"],
     button: ["ButtonHTMLAttributes", "react"],
-    html: ["AllHTMLAttributes", "react"]
+    a: ["AnchorHTMLAttributes", "react"],
+    audio: ["AudioHTMLAttributes", "react"],
+    video: ["VideoHTMLAttributes", "react"],
+    source: ["SourceHTMLAttributes", "react"],
+    block: ["BlockquoteHTMLAttributes", "react"],
+    details: ["DetailsHTMLAttributes", "react"],
+    dialog: ["DialogHTMLAttributes", "react"],
+    form: ["FormHTMLAttributes", "react"],
+    input: ["InputHTMLAttributes", "react"],
+    label: ["LabelHTMLAttributes", "react"],
+    option: ["OptionHTMLAttributes", "react"],
+    select: ["SelectHTMLAttributes", "react"],
+    textarea: ["TextareaHTMLAttributes", "react"],
+    iframe: ["IframeHTMLAttributes", "react"],
+    img: ["ImgHTMLAttributes", "react"],
+    table: ["TableHTMLAttributes", "react"],
+    td: ["TdHTMLAttributes", "react"],
+    th: ["ThHTMLAttributes", "react"],
   }
 
   if(as in dict){
@@ -62,14 +85,21 @@ function generateComponentFile(groupName: string, components: ComponentData[]){
 
 
     const [interfaceName, interfacePath] = getComponentInterface(as)
+
+    t.addImport('react').default('React')
     t.addImport(interfacePath).named([interfaceName])
+
+    t.addImport("../react").named(["ComponentFactory"])
+
     const flatName = name.replace(".", "")
     const propInterface =  flatName + "Props"
 
     t.addLine("")
-    t.addLine(`interface ${propInterface} extends ${interfaceName}<{}> {`, tab)
-    t.addLine(`${directiveToTypes(c)}`, tab+1)
-    t.addLine(`}`, tab)
+
+      t.addLine(`interface ${propInterface} extends ${interfaceName}<unknown> {`, tab)
+      const _d = directiveToTypes(c)
+      t.addMultiLine(_d ? `${_d}` : "[key: string]: unknown", tab+1)
+      t.addLine(`}`, tab)
     
     if(!isDefault){
       compProperties.push([name, flatName, propInterface])
@@ -86,30 +116,31 @@ function generateComponentFile(groupName: string, components: ComponentData[]){
         t.addLine(`interface ${groupName}Component extends React.FC<${propInterface}> {`, tab)
         compProperties.forEach( ([dottedName, , compInterface]) => {
           const [,childName] = dottedName.split('.')
-          childName && t.addLine(`${childName}: ${compInterface}`, tab+1)
+          childName && t.addLine(`${childName}: React.FC<${compInterface}>`, tab+1)
         })
         t.addLine(`}`, tab)
     
         t.addLine("")
+        t.addLine("// eslint-disable-next-line @typescript-eslint/no-explicit-any")
         t.addLine(`const ${groupName}:any = ComponentFactory(${fileHanler.jsonToString(c)})`)
       }else{
         t.addLine("")
         t.addLine(`interface ${groupName}Component {`, tab)
         compProperties.forEach( ([dottedName, , compInterface]) => {
           const [,childName] = dottedName.split('.')
-          childName && t.addLine(`${childName}: ${compInterface}`, tab+1)
+          childName && t.addLine(`${childName}: React.FC<${compInterface}>`, tab+1)
         })
         t.addLine(`}`, tab)
 
         t.addLine("")
-        t.addLine(`const ${flatName}:any = {}`)
-
-        t.addLine("")
-        compProperties.forEach( ([dottedName, compPropName]) => {
-          t.addLine(`${dottedName} = ${compPropName}`)
-        })
+        t.addLine("// eslint-disable-next-line @typescript-eslint/no-explicit-any")
+        t.addLine(`const ${groupName}:any = {}`)
       }
-
+      
+      t.addLine("")
+      compProperties.forEach( ([dottedName, compPropName]) => {
+        t.addLine(`${dottedName} = ${compPropName}`)
+      })
 
       // export component group
       t.addLine("")
@@ -128,6 +159,9 @@ export default function generate(styleFilePath: string) {
   const groups = getComponentGroups(components)
 
   Object.entries(groups).forEach( ([groupName, comps]) => {
-    console.log( generateComponentFile(groupName, comps) )
+    const result = generateComponentFile(groupName, comps)
+    const status = fileHanler.write(`./src/components/${groupName}.ts`, result)
+    console.log( result )
+    console.log({ status })
   })
 }
