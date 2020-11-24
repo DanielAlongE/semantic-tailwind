@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { read } from "./file-handler";
 const path = require("path");
 const _resolveConfigObjects = require('tailwindcss/lib/util/resolveConfig').default
@@ -27,6 +28,7 @@ export function getUserTailwindConfig(filePath=""){
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function resolveConfigObjects(userConfigObj?: any){
 
   if(!userConfigObj){
