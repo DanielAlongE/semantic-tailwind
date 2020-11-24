@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "npm run build && jest",
-    "tailwind": "tailwindcss build .\\src\\css\\_style.css -o .\\src\\css\\style.css"
+    "tailwind": "tailwindcss-cli ./src/css/_style.css -o ./src/css/style.css"
   },
   "repository": {
     "type": "git",
@@ -41,12 +41,13 @@
     "@typescript-eslint/parser": "^4.6.0",
     "eslint": "^7.12.1",
     "jest": "^26.6.0",
-    "tailwindcss": "^1.9.6",
+    "tailwindcss": "^2.0.1",
     "typescript": "^3.9.7"
   },
   "dependencies": {
-    "autoprefixer": "^10.0.1",
+    "autoprefixer": "^10.0.2",
     "commander": "^6.2.0",
+    "postcss": "^8.1.10",
     "postcss-import": "^13.0.0",
     "precss": "^4.0.0"
   },
