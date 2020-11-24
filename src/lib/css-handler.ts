@@ -27,7 +27,7 @@ export function getClasses(css: string){
     .map( c => c?.replace(/:{2}[a-zA-Z0-9_\\-]+$/g, "") // remove ::
       .replace(/(\\*):{1}([a-zA-Z0-9_\\-]+)$/g, handlePseudo) // :
       .replace(/(\\*):{1}([a-zA-Z0-9_\\-]+)$/g, handlePseudo)
-      // .replace(/\\/g,"")
+      .replace(/\\/g,"")
       .replace(/^\./g, "")
     )
 
