@@ -5,6 +5,7 @@ import { ComponentData } from "../types/reactComponentFactory"
 import StyleConfig from "../types/styleConfig"
 import templateMaker from "../lib/templateMaker"
 import { isObject, isString, isNumeric } from "../lib/type-check"
+import getComponentInterface from "./componentInterface"
 
 function isDefaultComp(c:string){
   return c && c.indexOf(".") === -1
@@ -40,36 +41,7 @@ function directiveToTypes(comp: ComponentData){
   return result
 }
 
-function getComponentInterface(as: string){
-  const dict = {
-    html: ["HTMLAttributes", "react"],
-    button: ["ButtonHTMLAttributes", "react"],
-    a: ["AnchorHTMLAttributes", "react"],
-    audio: ["AudioHTMLAttributes", "react"],
-    video: ["VideoHTMLAttributes", "react"],
-    source: ["SourceHTMLAttributes", "react"],
-    block: ["BlockquoteHTMLAttributes", "react"],
-    details: ["DetailsHTMLAttributes", "react"],
-    dialog: ["DialogHTMLAttributes", "react"],
-    form: ["FormHTMLAttributes", "react"],
-    input: ["InputHTMLAttributes", "react"],
-    label: ["LabelHTMLAttributes", "react"],
-    option: ["OptionHTMLAttributes", "react"],
-    select: ["SelectHTMLAttributes", "react"],
-    textarea: ["TextareaHTMLAttributes", "react"],
-    iframe: ["IframeHTMLAttributes", "react"],
-    img: ["ImgHTMLAttributes", "react"],
-    table: ["TableHTMLAttributes", "react"],
-    td: ["TdHTMLAttributes", "react"],
-    th: ["ThHTMLAttributes", "react"],
-  }
 
-  if(as in dict){
-    return dict["button"]
-  }
-
-  return dict["html"]
-}
 
 function generateComponentFile(groupName: string, components: ComponentData[]){
   const t = templateMaker()
