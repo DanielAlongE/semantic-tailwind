@@ -8,18 +8,26 @@ export function getClasses(css: string){
     return ""
   }
 
+  const handleDots = ( m:string, m1:string, slash:string ) => {
+    if(m1 && slash){
+      return m
+    }
+    return "\n"
+  }
+
   const t = css
     //.replace(/\./g, "\n.")
-    .replace(/{/g, "{\n")
+    // .replace(/{/g, "{\n")
     .replace(/}/g, "}\n")
     .split("\n")
     // .map(c => {console.log(c); return c})
-    .map(c => c ? c.match(/^(\s*(\.[a-zA-Z0-9:./_\\-]+))+/g) : null)
+    .map(c => c ? c.match(/^([\s,]*(\.[a-zA-Z0-9:./_\\-]+))+/g) : null)
     //.map(c => c ? c.replace(/^(\s*\.([a-zA-Z0-9:/_\\-]+))+/g, "$2") : null)
     .map(c => c?.join("")
                 .replace(/[ ]+$/g, "")
                 .replace(/^[ ]+/g, "")
-                .replace(/[ ]+/g, "\n")
+                .replace(/[\s,]+/g, "\n")
+                .replace(/((\\*)(\.))/g, handleDots)
     )
     .join("\n")
     .split("\n")
@@ -28,7 +36,6 @@ export function getClasses(css: string){
       .replace(/(\\*):{1}([a-zA-Z0-9_\\-]+)$/g, handlePseudo) // :
       .replace(/(\\*):{1}([a-zA-Z0-9_\\-]+)$/g, handlePseudo)
       .replace(/\\/g,"")
-      .replace(/^\./g, "")
     )
 
     console.log(t)
