@@ -7,6 +7,8 @@ const cssHander = require("./dist/lib/css-handler")
 
 const s = file.read('.\\src\\css\\style.css')
 
-const cls = cssHander.getClasses(s).join("\n")
+const cls = cssHander.getClasses(s)
 
-file.write(".\\classList.txt", cls)
+const str = Array.from(new Set(cls)).join("\n")
+
+file.write(".\\classList.txt", str)
