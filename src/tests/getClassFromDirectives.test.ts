@@ -61,7 +61,7 @@ test('check if matched props are computed 1', () => {
   }, props)
 
   expect(cls).toContain("py-2")
-  expect(cls).toContain("text-@color")
+  expect(cls).toContain("text-red-500")
   expect(cls).toContain("bg-black")
 });
 
@@ -79,7 +79,7 @@ test('check if matched props are computed 2', () => {
   }, props)
 
   expect(cls).toContain("py-2")
-  expect(cls).toContain("border-@color")
+  expect(cls).toContain("border-red-500")
 });
 
 test('check if matched props are computed 3', () => {
@@ -96,7 +96,7 @@ test('check if matched props are computed 3', () => {
   }, props)
 
   expect(cls).toContain("py-2")
-  expect(cls).toContain("@size")
+  expect(cls).toContain("text-xs")
 });
 
 test('check if findMatch returns false', () => {
