@@ -1,4 +1,4 @@
-import {componentDirectivesToClassNames, findMatch, handleFilters, handleReferences, handleMatched, handleComputed } from '../lib/processDirectives'
+import {componentDirectivesToClassNames, findMatch, handleFilters, handleReferences, handleMatched, handleComputed } from '../lib/component-handler'
 // test('adds 1 + 2 to equal 3', () => {
 //   const tailwindcss = require('tailwindcss');
 //   console.log(tailwindcss.process())
