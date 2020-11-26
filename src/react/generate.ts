@@ -68,10 +68,11 @@ function generateComponentFile(groupName: string, components: ComponentData[]){
 
     t.addLine("")
 
-      t.addLine(`interface ${propInterface} extends ${interfaceName}<unknown> {`, tab)
-      const _d = directiveToTypes(c)
-      t.addMultiLine(_d ? `${_d}` : "[key: string]: unknown", tab+1)
-      t.addLine(`}`, tab)
+    t.addLine(`interface ${propInterface} extends ${interfaceName}<unknown> {`, tab)
+    const _d = directiveToTypes(c)
+    t.addMultiLine(_d ? `${_d}` : "[key: string]: unknown", tab+1)
+    t.addLine(`as: React.FC<any> | string`, tab+1)
+    t.addLine(`}`, tab)
     
     if(!isDefault){
       compProperties.push([name, flatName, propInterface])
