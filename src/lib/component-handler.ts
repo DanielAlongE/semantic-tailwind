@@ -3,15 +3,8 @@ import { isString, isObject, isBoolean } from './type-check';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
-
 export function handleComputed(computeExpression:string, value:string ): string{
   return computeExpression.replace(new RegExp("#", "g"), value)
-}
-
-
-export function isHtmlProp(prop: string){
-  const whiteList = ['accept', 'acceptCharset', 'action', 'allowFullScreen', 'allowTransparency', 'alt', 'as', 'async', 'autoComplete', 'autoFocus', 'autoPlay', 'capture', 'cellPadding', 'cellSpacing', 'charSet', 'challenge', 'checked', 'cite', 'classID', 'cols', 'colSpan', 'content', 'controls', 'coords', 'crossOrigin', 'data', 'dateTime', 'default', 'defer', 'disabled', 'download', 'encType', 'form', 'formAction', 'formEncType', 'formMethod', 'formNoValidate', 'formTarget', 'frameBorder', 'headers', 'height', 'high', 'href', 'hrefLang', 'htmlFor', 'httpEquiv', 'integrity', 'keyParams', 'keyType', 'kind', 'label', 'list', 'loop', 'low', 'manifest', 'marginHeight', 'marginWidth', 'max', 'maxLength', 'media', 'mediaGroup', 'method', 'min', 'minLength', 'multiple', 'muted', 'name', 'nonce', 'noValidate', 'open', 'optimum', 'pattern', 'placeholder', 'playsInline', 'poster', 'preload', 'readOnly', 'rel', 'required', 'reversed', 'rows', 'rowSpan', 'sandbox', 'scope', 'scoped', 'scrolling', 'seamless', 'selected', 'shape', 'size', 'sizes', 'span', 'src', 'srcDoc', 'srcLang', 'srcSet', 'start', 'step', 'summary', 'target', 'type', 'useMap', 'value', 'width', 'wmode', 'wrap']
-  return whiteList.includes(prop)
 }
 
 export function handleFilters(filterObj: ComponentData['filters'] = {}, props:any, classNames: string): string {
@@ -124,10 +117,10 @@ export function handleMatched(matchedObj: ComponentData['matched'] = {}, props: 
   return [ classNames, matchedProps ]
 }
 
-export function componentDirectivesToClassNames(component: ComponentData, _props:Record<string, unknown>){
+export function componentDirectivesToClassNames(component: ComponentData, _props:Record<string, unknown>, _baseClass=""){
   const directiveSkipList: string[] = []
   const { baseClass="", directives={}, computed={}, matched={} } = component
-  let classNames = Array.isArray(baseClass) ? baseClass.join("") : baseClass
+  let classNames = (Array.isArray(baseClass) ? baseClass.join("") : baseClass) + (_baseClass ? ` ${_baseClass}` : "")
 
   // check for matches
   if(component.matched){
