@@ -3,7 +3,6 @@
 import React from 'react';
 import { ComponentData } from '../types/reactComponentFactory'
 import { getClassesAndProps, handleFilters, handleMatched, handleReferences } from './helper'
-
  
 export function ComponentFactory(data: ComponentData, _comp?: React.FC<any>){
   return React.forwardRef((props:any = {}, ref:unknown) => {
