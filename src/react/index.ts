@@ -1,22 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
+import { componentDirectivesToClassNames } from '../lib/component-handler';
+import { isString } from '../lib/type-check';
 import { ComponentData } from '../types/reactComponentFactory'
-import { getClassesAndProps, handleFilters, handleMatched, handleReferences } from './helper'
+import { getValidHtmlProp } from './helper';
  
 export function ComponentFactory(data: ComponentData, _comp?: React.FC<any>){
   return React.forwardRef((props:any = {}, ref:unknown) => {
-    const {className="", children, key, ...rest} = props
+    const {className="", as:renderAs, children=null, key, ...rest} = props
     //:{className?:string, children?:any, key?:string, rest?:any}
   
     const p: any = {}
   
     // componentType
-    const comp = _comp ? _comp : (data.as || "div")
-
-    // directives
-    const { directives= {} } = data
-     
+    const comp = renderAs ? renderAs : 
+                    _comp ? _comp : (data.as || "div")
   
     if(key){
       p['key'] = key
@@ -26,31 +25,10 @@ export function ComponentFactory(data: ComponentData, _comp?: React.FC<any>){
       p['ref'] = ref
     }
 
-    let computedClassNames = ""
-    let skipList: string[] = []
+    const _props = isString(comp) ? getValidHtmlProp(rest) : rest
 
-    // handle matched props
-    if(data.matched){
-      const [s, matchedClassNames] = handleMatched(data.matched, props)
-      skipList = [...s]
-      computedClassNames += ` ${matchedClassNames}`
-    }
-  
-    // const tailwindcss = computeClasses(rest)
-    const [_className, _props] = getClassesAndProps(data, rest, skipList)
+    const cls = componentDirectivesToClassNames(data, rest, className)
 
-    computedClassNames += ` ${_className} ${className}`
-
-    // match and replace references
-    if(computedClassNames.indexOf("@") > -1){
-      computedClassNames = handleReferences(directives, props, computedClassNames)
-    }
-    
-
-    if(data.filters){
-      computedClassNames = handleFilters(data.filters, props, computedClassNames)
-    }
-    
-    return React.createElement(comp, {...p, ..._props, ...rest, className: computedClassNames}, children )    
+    return React.createElement(comp, {...p, className: cls, ..._props}, children )
   });
 }
