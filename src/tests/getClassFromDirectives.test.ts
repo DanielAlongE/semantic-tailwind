@@ -1,5 +1,4 @@
-import { findMatch, handleFilters, handleReferences, handleMatched, handleComputed } from "../react/helper"
-import getClassesAndProps from '../lib/processDirectives'
+import {componentDirectivesToClassNames, findMatch, handleFilters, handleReferences, handleMatched, handleComputed } from '../lib/processDirectives'
 // test('adds 1 + 2 to equal 3', () => {
 //   const tailwindcss = require('tailwindcss');
 //   console.log(tailwindcss.process())
@@ -7,38 +6,38 @@ import getClassesAndProps from '../lib/processDirectives'
 // });
 
 test('check if baseClass compute', () => {
-  const [cls] = getClassesAndProps({name:"test", baseClass:"py-2"}, {})
+  const cls = componentDirectivesToClassNames({name:"test", baseClass:"py-2"}, {})
   expect(cls).toBe("py-2")
 });
 
 // test('check if default directive compute', () => {
-//   const [cls] = getClassesAndProps({name:"test", baseClass:"", directives:{default:"text-black"}}, {})
+//   const cls = componentDirectivesToClassNames({name:"test", baseClass:"", directives:{default:"text-black"}}, {})
 //   expect(cls).toContain("text-black")
 // });
 
-test('check if props are preserved', () => {
-  const [,props] = getClassesAndProps({name:"test", baseClass:"py-2"}, {tabIndex:0})
-  expect(Object.keys(props).length).toBe(1)
-});
+// test('check if props are preserved', () => {
+//   const [,props] = componentDirectivesToClassNames({name:"test", baseClass:"py-2"}, {tabIndex:0})
+//   expect(Object.keys(props).length).toBe(1)
+// });
 
 
 test('check if directves and props compute', () => {
-  const [cls, props] = getClassesAndProps({name:"test", baseClass:"py-2", directives:{primary:"bg-blue-500", size:{mini:"text-xs"}}}, {primary:true, size:"mini"})
-  expect(Object.keys(props).length).toBe(1)
+  const cls = componentDirectivesToClassNames({name:"test", baseClass:"py-2", directives:{primary:"bg-blue-500", size:{mini:"text-xs"}}}, {primary:true, size:"mini"})
+  //expect(Object.keys(props).length).toBe(1)
   expect(cls).toContain("text-xs")
   expect(cls).toContain("bg-blue-500")
 });
 
 
 test('check if string[] are valid classNames', () => {
-  const [cls] = getClassesAndProps({name:"test", baseClass:["py-2"], directives:{primary:["bg-blue-500"], size:{mini:["text-xs"]}}}, {primary:true, size:"mini"})
+  const cls = componentDirectivesToClassNames({name:"test", baseClass:["py-2"], directives:{primary:["bg-blue-500"], size:{mini:["text-xs"]}}}, {primary:true, size:"mini"})
   expect(cls).toContain("py-2")
   expect(cls).toContain("text-xs")
   expect(cls).toContain("bg-blue-500")
 });
 
 // test('check if skipList works', () => {
-//   const [cls, props] = getClassesAndProps({
+//   const [cls, props] = componentDirectivesToClassNames({
 //     name:"test", baseClass:["py-2"], 
 //     directives:{primary:["bg-blue-500"], size:{mini:["text-xs"]}}}, 
 //     {primary:true, size:"mini"},
@@ -50,16 +49,16 @@ test('check if string[] are valid classNames', () => {
 
 test('check if matched props are computed 1', () => {
   const props = {primary:true, size:"mini", color:'red', dark:true}
-  const [skipList, classNames] = handleMatched({
+
+  const cls = componentDirectivesToClassNames({
+    name:"test", baseClass:["py-2"], 
+    directives:{primary:["bg-blue-500"], color:{red:"red-500"}, size:{mini:["text-xs"]}},
+    matched: {
       "color:red": "border-@color",
       "size:mini": "@size",
       "primary,color:red,dark": "text-@color bg-black"
-    }, props)
-
-  const [cls] = getClassesAndProps({
-    name:"test", baseClass:["py-2", classNames], 
-    directives:{primary:["bg-blue-500"], color:{red:"red-500"}, size:{mini:["text-xs"]}},
-  }, props, skipList)
+    }
+  }, props)
 
   expect(cls).toContain("py-2")
   expect(cls).toContain("text-@color")
@@ -68,16 +67,16 @@ test('check if matched props are computed 1', () => {
 
 test('check if matched props are computed 2', () => {
   const props = {primary:false, size:"mini", color:'red', dark:true}
-  const [skipList, classNames] = handleMatched({
+  const [classNames] = handleMatched({
       "primary,color:red,dark": "text-@color bg-black",
       "color:red,dark": "border-@color",
       "size:mini": "@size"
     }, props)
 
-  const [cls] = getClassesAndProps({
+  const cls = componentDirectivesToClassNames({
     name:"test", baseClass:["py-2", classNames], 
     directives:{primary:["bg-blue-500"], color:{red:"red-500"}, size:{mini:["text-xs"]}},
-  }, props, skipList)
+  }, props)
 
   expect(cls).toContain("py-2")
   expect(cls).toContain("border-@color")
@@ -85,16 +84,16 @@ test('check if matched props are computed 2', () => {
 
 test('check if matched props are computed 3', () => {
   const props = {primary:false, size:"mini"}
-  const [skipList, classNames] = handleMatched({
+  const [classNames] = handleMatched({
       "primary,color:red,dark": "text-@color bg-black",
       "color:red": "border-@color",
       "size:mini": "@size"
     }, props)
 
-  const [cls] = getClassesAndProps({
+  const cls = componentDirectivesToClassNames({
     name:"test", baseClass:["py-2", classNames], 
     directives:{primary:["bg-blue-500"], color:{red:"red-500"}, size:{mini:["text-xs"]}},
-  }, props, skipList)
+  }, props)
 
   expect(cls).toContain("py-2")
   expect(cls).toContain("@size")
@@ -123,7 +122,7 @@ test('check if findMatch works dims unsupplied prop as false', () => {
 });
 
 test('check if computed directives work on boolean', () => {
-  const [cls] = getClassesAndProps({
+  const cls = componentDirectivesToClassNames({
     name:"test", 
     baseClass:"", 
     directives:{ primary:["blue-500"]},
@@ -145,7 +144,7 @@ test('check if handleComputed replaces #', () => {
 });
 
 test('check if computed directives work on string', () => {
-  const [cls] = getClassesAndProps({
+  const cls = componentDirectivesToClassNames({
     name:"test", 
     baseClass:"", 
     directives:{ color:{blue: "blue-500"}},
