@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-
-// import { write } from "../lib/file-handler";
-import { getStyleObj, resolveConfigObjects } from "../lib/helpers";
-import { typography } from "../lib/tailwind";
+/* eslint-disable @typescript-eslint/no-var-requires */
+import * as path from "path"
+import generate from "../react/generate";
 
 const { Command } = require('commander');
 const program = new Command();
@@ -20,27 +19,30 @@ program.version('0.0.1');
 // program.parse(process.argv);
 
 program
-  // .option('--sauce <flavour>', 'sauce flavour', 'peperoni')
-  // .option('--no-sauce', 'Remove sauce')
-  // .option('--cheese <flavour>', 'cheese flavour', 'mozzarella')
-  // .option('--no-cheese', 'plain with no cheese')
-  .option('-s, --style', 'print style')
-  .option('-t, --test', 'test app')
-  .action(({test, style}:{test: any, style:string}) => {
-    if(style){
-      const configObj = resolveConfigObjects()
-      const result = typography(configObj)
-      // write("testing.json", JSON.stringify(result,null, 2))
-      console.log(result, result.length)
-    }
-    else if(test){
-      console.log("------ test ------")
-      console.log(process.cwd())
-      console.log()
-    }
-  })
-  .parse(process.argv);
+  .command('build [source]')
+  .description('generate components from source')
+  .option("-o, --output [output]", "output directory")
+  .action(function(source:string, options:any){
+    const cwd = process.cwd();
+    const output = options.output;
 
+    const sourcePath = path.resolve(cwd, source)
+    const outputPath = path.resolve(cwd, output)
+
+    console.log("cwd ", cwd)
+    console.log("__dirname ", __dirname)
+
+    if(source && output){
+      console.log('build %s --output %s', source, output);
+      console.log('build %s --output %s', sourcePath, outputPath);
+      generate(sourcePath, outputPath)
+    }else{
+      console.error("output directory is required")
+    }
+  });
+
+
+  program.parse(process.argv);
 
 // if (program.cheese === undefined) console.log('no cheese');
 // else if (program.cheese === true) console.log('add cheese');
