@@ -1,6 +1,6 @@
 /* eslint-disable for-direction */
 import { getComponentGroups } from "../lib/config-handler"
-import * as fileHanler from "../lib/file-handler"
+import * as fileHandler from "../lib/file-handler"
 import { ComponentData } from "../types/reactComponentFactory"
 import StyleConfig from "../types/styleConfig"
 import templateMaker from "../lib/templateMaker"
@@ -78,7 +78,7 @@ function generateComponentFile(groupName: string, components: ComponentData[]){
       compProperties.push([name, flatName, propInterface])
       
       t.addLine(`\n// ${flatName} Comp comes here -- `)
-      t.addLine(`const ${flatName} = ComponentFactory(${fileHanler.jsonToString(c)}) as React.FC<${propInterface}>`)
+      t.addLine(`const ${flatName} = ComponentFactory(${fileHandler.jsonToString(c)}) as React.FC<${propInterface}>`)
     }
 
     // root component expected to be on index 0
@@ -95,7 +95,7 @@ function generateComponentFile(groupName: string, components: ComponentData[]){
     
         t.addLine("")
         t.addLine("// eslint-disable-next-line @typescript-eslint/no-explicit-any")
-        t.addLine(`const ${groupName}:any = ComponentFactory(${fileHanler.jsonToString(c)})`)
+        t.addLine(`const ${groupName}:any = ComponentFactory(${fileHandler.jsonToString(c)})`)
       }else{
         t.addLine("")
         t.addLine(`interface ${groupName}Component {`, tab)
@@ -126,15 +126,16 @@ function generateComponentFile(groupName: string, components: ComponentData[]){
   return t.toString()
 }
 
-export default function generate(styleFilePath: string) {
-  const str = fileHanler.read(styleFilePath)
-  const { components } = fileHanler.stringToJson<StyleConfig>( str, [] )
+export default function generate(styleFilePath: string, outputDir:string) {
+  const str = fileHandler.read(styleFilePath)
+  const { components } = fileHandler.stringToJson<StyleConfig>( str, [] )
   const groups = getComponentGroups(components)
 
   Object.entries(groups).forEach( ([groupName, comps]) => {
     const result = generateComponentFile(groupName, comps)
-    const status = fileHanler.write(`./src/components/${groupName}.ts`, result)
-    console.log( result )
-    console.log({ status })
+    // const status = 
+    fileHandler.write(`${outputDir}/${groupName}.ts`, result)
+    //console.log( result )
+    //console.log({ status })
   })
 }
