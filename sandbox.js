@@ -13,7 +13,7 @@
 
 // file.write(".\\classList.txt", str)
 
-const { componentDirectivesToClassNames } = require('./dist/lib/processDirectives')
+const { componentDirectivesToClassNames } = require('./dist/lib/component-handler')
 
 const props = {primary:true, size:"some", color:'red', dark:true}
 
