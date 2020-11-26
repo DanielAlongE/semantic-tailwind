@@ -151,55 +151,6 @@ export function handleMatched(matchedObj: ComponentData['matched'] = {}, props: 
   return [ classNames, matchedProps ]
 }
 
-export function getClassesAndProps(data: ComponentData, _props: any, skipList: string[] = []): [string, Record<string, any>]{
-  let classNames = ""
-  const props: any = { }
-  const { directives={}, baseClass } = data
-  // let directiveCount = 0
-
-  // baseClass
-  classNames += Array.isArray(baseClass) ? baseClass.join("") : baseClass
-
-  Object.entries(_props).forEach( ([propKey, propValue]) => {
-    
-      if(directives && Object.prototype.hasOwnProperty.call(directives, propKey)){
-        let result = ""
-
-        // skip if directive was matched
-        if(!skipList.includes(propKey)){
-          result = getClassNames(propKey, propValue, directives)
-
-          // replace computed properties
-          const computedStr = data.computed && data.computed[propKey]
-          if(computedStr){
-            result = handleComputed(computedStr, result)
-          }
-        }
-      
-
-
-      if(result){
-        classNames += " " + result
-      }
-
-      // pass prop to element if directive is a valid html attribute
-      if(isHtmlProp(propKey)){
-        props[propKey] = propValue
-      }
-
-      // directiveCount += 1
-    }else{
-      props[propKey] = propValue
-    }
-  })
-
-  // if(directiveCount === 0 && directives['default']){
-  //   classNames += " " + getClassNames("default", true, directives)
-  // }
-
-  return [classNames, props]
-}
-
 export function componentDirectivesToClassNames(component: ComponentData, _props:Record<string, unknown>){
   const directiveSkipList: string[] = []
   const { baseClass="", directives={}, computed={}, matched={} } = component
