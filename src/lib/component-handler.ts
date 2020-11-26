@@ -1,5 +1,5 @@
 import { Directive, Directives, ClassProp, ComponentData } from "../types/reactComponentFactory";
-import { isString, isObject, isBoolean } from '../lib/type-check';
+import { isString, isObject, isBoolean } from './type-check';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
@@ -221,7 +221,7 @@ export function componentDirectivesToClassNames(component: ComponentData, _props
     if(Object.prototype.hasOwnProperty.call(directives, key)){
       cls = getDirectiveClass(key, (<string>value), directives)
 
-      console.log(key, value, cls)
+      // console.log(key, value, cls)
 
       if(Object.prototype.hasOwnProperty.call(computed, key)){
         const computedStr = computed[key]
