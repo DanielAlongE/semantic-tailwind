@@ -12,19 +12,3 @@
 // const str = Array.from(new Set(cls)).join("\n")
 
 // file.write(".\\classList.txt", str)
-
-const { componentDirectivesToClassNames } = require('./dist/lib/component-handler')
-
-const props = {primary:true, size:"some", color:'red', dark:true}
-
-const cls = componentDirectivesToClassNames({
-  name:"test", baseClass:["@color py-2 "], 
-  directives:{primary:["bg-blue-500"], color:{red:"red-500"}, size:{mini:["text-xs"]}},
-  matched: {
-    "color:red": "border-@color",
-    "size:mini": "@size:some",
-    "primary,color:red,dark": "text-@color bg-black"
-  }
-}, props)
-
-console.log(cls)
