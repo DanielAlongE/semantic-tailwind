@@ -8,33 +8,6 @@ export function handleComputed(computeExpression:string, value:string ): string{
   return computeExpression.replace(new RegExp("#", "g"), value)
 }
 
-function getClassNames(key:string, value:any, directives: ComponentData['directives']): string {
-  let classNames = ""
-
-  if(directives && Object.prototype.hasOwnProperty.call(directives, key)){
-    let cls: string | string[] = ""
-    const currentDirective = directives[key]
-
-    if(isObject(currentDirective) && isString(value)){
-      // check if default value exist || pick first element
-      const allKeys = Object.keys(currentDirective)
-      const defaultKey = ("default" in <Record<string,any>>currentDirective) ? "default" : ((<any>currentDirective)[allKeys[0]] || "")
-      
-      if((value in <Record<string,any>>currentDirective)){
-        cls = (<any>currentDirective)[value] || ""
-      }else{
-        cls = defaultKey ? (<any>currentDirective)[defaultKey] : ""
-      }
-    }
-    else if(value){
-      cls = <string | string[]>currentDirective || ""
-    }
-
-    classNames += ( Array.isArray(cls) ? (<string[]>cls).join(" ") : cls )
-    
-  }
-  return classNames
-}
 
 export function isHtmlProp(prop: string){
   const whiteList = ['accept', 'acceptCharset', 'action', 'allowFullScreen', 'allowTransparency', 'alt', 'as', 'async', 'autoComplete', 'autoFocus', 'autoPlay', 'capture', 'cellPadding', 'cellSpacing', 'charSet', 'challenge', 'checked', 'cite', 'classID', 'cols', 'colSpan', 'content', 'controls', 'coords', 'crossOrigin', 'data', 'dateTime', 'default', 'defer', 'disabled', 'download', 'encType', 'form', 'formAction', 'formEncType', 'formMethod', 'formNoValidate', 'formTarget', 'frameBorder', 'headers', 'height', 'high', 'href', 'hrefLang', 'htmlFor', 'httpEquiv', 'integrity', 'keyParams', 'keyType', 'kind', 'label', 'list', 'loop', 'low', 'manifest', 'marginHeight', 'marginWidth', 'max', 'maxLength', 'media', 'mediaGroup', 'method', 'min', 'minLength', 'multiple', 'muted', 'name', 'nonce', 'noValidate', 'open', 'optimum', 'pattern', 'placeholder', 'playsInline', 'poster', 'preload', 'readOnly', 'rel', 'required', 'reversed', 'rows', 'rowSpan', 'sandbox', 'scope', 'scoped', 'scrolling', 'seamless', 'selected', 'shape', 'size', 'sizes', 'span', 'src', 'srcDoc', 'srcLang', 'srcSet', 'start', 'step', 'summary', 'target', 'type', 'useMap', 'value', 'width', 'wmode', 'wrap']
