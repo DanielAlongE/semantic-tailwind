@@ -3,7 +3,7 @@
 import React from 'react';
 import { componentDirectivesToClassNames } from '../lib/component-handler';
 import { isString } from '../lib/type-check';
-import { ComponentData } from '../types/reactComponentFactory'
+import { ComponentData } from '../types/componentFactory'
 import { getValidHtmlProp } from './helper';
  
 export function ComponentFactory(data: ComponentData, _comp?: React.FC<any>){
