@@ -1,4 +1,4 @@
-import { Directive, Directives, ClassProp, ComponentData } from "../types/reactComponentFactory";
+import { Directive, Directives, ClassProp, ComponentData } from "../types/componentFactory";
 import { isString, isObject, isBoolean } from './type-check';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
