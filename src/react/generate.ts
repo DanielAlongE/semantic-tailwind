@@ -1,12 +1,12 @@
 /* eslint-disable for-direction */
-import { getComponentGroups } from "../lib/config-handler"
+import { componentObjectToArray, getComponentGroups, getConfigObject } from "../lib/config-handler"
 import * as fileHandler from "../lib/file-handler"
-import { ComponentData } from "../types/reactComponentFactory"
-import StyleConfig from "../types/styleConfig"
+import { ComponentData } from "../types/componentFactory"
 import templateMaker from "../lib/templateMaker"
 import { isObject, isString, isNumeric } from "../lib/type-check"
 import getComponentInterface from "./componentInterface"
 import * as path from "path"
+import { ConfigObj } from "../types/styleConfig"
 
 function isDefaultComp(c:string){
   return c && c.indexOf(".") === -1
@@ -53,7 +53,7 @@ function generateComponentFile(groupName: string, components: ComponentData[]){
 
   for(let i=components.length-1; i>=0; i-=1){
     const c = components[i]
-    const { name, as="" } = c
+    const { name="", as="" } = c
     const isDefault = isDefaultComp(name)
 
 
@@ -127,15 +127,27 @@ function generateComponentFile(groupName: string, components: ComponentData[]){
   return t.toString()
 }
 
-export default function generate(styleFilePath: string, outputDir:string) {
+export default function generate(configObject: ConfigObj, outDir:string) {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const config = require(styleFilePath)
-  const { components } = config
+  const { components={}, outDir:o="" } = configObject
+  const _outDir = outDir || o
 
-  const groups = components ? getComponentGroups(components) : {}
+  if(!_outDir){
+    return Promise.reject("outDir not supplied")
+  }
+  
+  return new Promise( (resolve, reject) => {
+    const o = Object.entries(components).map(([groupName, compObj]) => {
+          const comps = componentObjectToArray({[groupName]: compObj})
+          const result = generateComponentFile(groupName, comps)
+          return fileHandler.write(path.join(_outDir, `${groupName}.ts`), result)
+    })
 
-  Object.entries(groups).forEach( ([groupName, comps]) => {
-    const result = generateComponentFile(groupName, comps)
-    fileHandler.write(path.join(outputDir, `${groupName}.ts`), result)
+    if(o.every(x => x === true)){
+      resolve("Successful")
+    }
+
+    reject("An error occured")
   })
+
 }
