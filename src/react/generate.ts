@@ -6,6 +6,7 @@ import StyleConfig from "../types/styleConfig"
 import templateMaker from "../lib/templateMaker"
 import { isObject, isString, isNumeric } from "../lib/type-check"
 import getComponentInterface from "./componentInterface"
+import * as path from "path"
 
 function isDefaultComp(c:string){
   return c && c.indexOf(".") === -1
@@ -61,7 +62,7 @@ function generateComponentFile(groupName: string, components: ComponentData[]){
     t.addImport('react').default('React')
     t.addImport(interfacePath).named([interfaceName])
 
-    t.addImport("../react").named(["ComponentFactory"])
+    t.addImport("semantic-tailwind").named(["ComponentFactory"])
 
     const flatName = name.replace(".", "")
     const propInterface =  flatName + "Props"
@@ -71,7 +72,7 @@ function generateComponentFile(groupName: string, components: ComponentData[]){
     t.addLine(`interface ${propInterface} extends ${interfaceName}<unknown> {`, tab)
     const _d = directiveToTypes(c)
     t.addMultiLine(_d ? `${_d}` : "[key: string]: unknown", tab+1)
-    t.addLine(`as: React.FC<any> | string`, tab+1)
+    t.addLine(`as?: React.FC<any> | string`, tab+1)
     t.addLine(`}`, tab)
     
     if(!isDefault){
@@ -127,15 +128,14 @@ function generateComponentFile(groupName: string, components: ComponentData[]){
 }
 
 export default function generate(styleFilePath: string, outputDir:string) {
-  const str = fileHandler.read(styleFilePath)
-  const { components } = fileHandler.stringToJson<StyleConfig>( str, [] )
-  const groups = getComponentGroups(components)
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const config = require(styleFilePath)
+  const { components } = config
+
+  const groups = components ? getComponentGroups(components) : {}
 
   Object.entries(groups).forEach( ([groupName, comps]) => {
     const result = generateComponentFile(groupName, comps)
-    // const status = 
-    fileHandler.write(`${outputDir}/${groupName}.ts`, result)
-    //console.log( result )
-    //console.log({ status })
+    fileHandler.write(path.join(outputDir, `${groupName}.ts`), result)
   })
 }
