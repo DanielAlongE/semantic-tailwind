@@ -120,7 +120,7 @@ export function handleMatched(matchedObj: ComponentData['matched'] = {}, props: 
 export function componentDirectivesToClassNames(component: ComponentData, _props:Record<string, unknown>, _baseClass=""){
   const directiveSkipList: string[] = []
   const { baseClass="", directives={}, computed={}, matched={} } = component
-  let classNames = (Array.isArray(baseClass) ? baseClass.join("") : baseClass) + (_baseClass ? ` ${_baseClass}` : "")
+  let classNames = (Array.isArray(baseClass) ? baseClass.join(" ") : baseClass) + (_baseClass ? ` ${_baseClass}` : "")
 
   // check for matches
   if(component.matched){
