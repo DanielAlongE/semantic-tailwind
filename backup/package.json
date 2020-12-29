@@ -1,0 +1,59 @@
+{
+  "name": "semantic-tailwind",
+  "version": "0.0.22",
+  "description": "",
+  "main": "dist/index.js",
+  "source": "src/index.ts",
+  "bin": {
+    "st": "dist/bin/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && jest",
+    "tailwind": "npx tailwindcss@2.0.1 build .\\src\\css\\_style.css -o .\\src\\css\\style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanielAlongE/semantic-tailwind.git"
+  },
+  "keywords": [
+    "ui",
+    "tailwindcss",
+    "semantic",
+    "react"
+  ],
+  "files": [
+    "dist/"
+  ],
+  "author": "Dan Alonge <https://twitter.com/DanAlongE>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanielAlongE/semantic-tailwind/issues"
+  },
+  "homepage": "https://github.com/DanielAlongE/semantic-tailwind#readme",
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@types/jest": "^26.0.14",
+    "@types/node": "^14.14.6",
+    "@types/react": "^16.9.53",
+    "@typescript-eslint/eslint-plugin": "^4.6.0",
+    "@typescript-eslint/parser": "^4.6.0",
+    "eslint": "^7.12.1",
+    "jest": "^26.6.0",
+    "tailwindcss": "^2.0.0",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.1.0",
+    "commander": "^6.2.0",
+    "postcss": "^8.2.1"
+  },
+  "peerDependencies": {
+    "tailwindcss": "^2.0.2",
+    "react": "^16.14.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
