@@ -1,0 +1,29 @@
+{
+  "name": "semantic-tailwind",
+  "version": "0.0.1",
+  "description": "A reusable component builder inspired by semantic-ui and tailwindcss",
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "build": "tsc -b packages/core packages/react ",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanielAlongE/semantic-tailwind.git"
+  },
+  "keywords": [
+    "tailwind",
+    "css",
+    "semantic",
+    "ui",
+    "react",
+    "vue",
+    "vanilla"
+  ],
+  "author": "Dan Alonge <https://twitter.com/DanAlongE>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DanielAlongE/semantic-tailwind/issues"
+  },
+  "homepage": "https://github.com/DanielAlongE/semantic-tailwind#readme"
+}
