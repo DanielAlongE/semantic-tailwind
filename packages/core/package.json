@@ -1,0 +1,15 @@
+{
+  "name": "semantic-tailwind-core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dan Alonge <https://twitter.com/DanAlongE>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DanielAlongE/semantic-tailwind/issues"
+  },
+  "homepage": "https://github.com/DanielAlongE/semantic-tailwind#readme"
+}
