@@ -1,6 +1,6 @@
 {
   "name": "semantic-tailwind-react",
-  "version": "1.0.0",
+  "version": "0.0.23",
   "description": "",
   "main": "dist/index.js",
   "bin": {
@@ -17,6 +17,7 @@
   "homepage": "https://github.com/DanielAlongE/semantic-tailwind#readme",
   "dependencies": {
     "react-subscribed-state": "^0.0.7",
-    "semantic-tailwind-cli": "^1.0.0"
+    "semantic-tailwind-cli": "^0.0.23",
+    "semantic-tailwind-core": "^0.0.23"
   }
 }
