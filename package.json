@@ -4,7 +4,7 @@
   "description": "A reusable component builder inspired by semantic-ui and tailwindcss",
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "build": "tsc -b packages/core packages/react ",
+    "build": "tsc -b packages/core packages/react packages/cli ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
