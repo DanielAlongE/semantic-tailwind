@@ -1,6 +1,6 @@
 {
   "name": "semantic-tailwind-cli",
-  "version": "1.0.0",
+  "version": "0.0.23",
   "description": "",
   "main": "dist/index.js",
   "source": "src/index.ts",
