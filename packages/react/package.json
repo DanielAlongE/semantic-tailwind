@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
+  "bin": {
+    "semantic-tailwind-react": "dist/bin/index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +16,7 @@
   },
   "homepage": "https://github.com/DanielAlongE/semantic-tailwind#readme",
   "dependencies": {
-    "react-subscribed-state": "^0.0.7"
+    "react-subscribed-state": "^0.0.7",
+    "semantic-tailwind-cli": "^1.0.0"
   }
 }
