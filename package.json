@@ -1,10 +1,9 @@
 {
   "name": "semantic-tailwind",
-  "version": "0.0.1",
   "description": "A reusable component builder inspired by semantic-ui and tailwindcss",
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "build": "tsc -b packages/core packages/react packages/cli ",
+    "build": "tsc -b packages/core packages/react packages/cli packages/playground ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
