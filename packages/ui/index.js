@@ -1,10 +1,16 @@
 #!/usr/bin/env node
 
-console.log("hello 2")
+console.log("semantic-tailwind!")
 
 const { default: startServer } = require('next/dist/server/lib/start-server')
+const { program } = require('commander');
 
-const port = 3000
+program
+  .option('--port <number>')
+  .parse(process.argv);
+
+const port = program.port ? +program.port : 3333
+
 const dir = __dirname
 startServer({ dir }, port)
   .then(async (app) => {
