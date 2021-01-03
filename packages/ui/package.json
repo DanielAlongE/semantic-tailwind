@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/DanielAlongE/semantic-tailwind#readme",
   "dependencies": {
+    "commander": "^6.2.1",
     "next": "^10.0.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
