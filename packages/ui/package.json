@@ -6,6 +6,10 @@
   "bin": {
     "semantic-tailwind": "./index.js"
   },
+  "files": [
+    ".next",
+    "index.js"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -31,5 +35,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b11f1b2f71feaf49f6721626c1081b6f1c108df"
+  "gitHead": "26076987fad523f853353314c3a7bcd36042ce5b"
 }
