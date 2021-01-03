@@ -1,5 +1,7 @@
+const components = require('./style.json')
+
 module.exports = {
   css: [],
-  components: {},
+  components,
   outDir: "./src/components"
 }
