@@ -19,5 +19,8 @@
     "react-subscribed-state": "^0.0.7",
     "semantic-tailwind-cli": "^0.0.23",
     "semantic-tailwind-core": "^0.0.23"
+  },
+  "peerDependencies": {
+    "react": "^16.14.0"
   }
 }
