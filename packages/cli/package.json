@@ -18,5 +18,8 @@
   "homepage": "https://github.com/DanielAlongE/semantic-tailwind#readme",
   "dependencies": {
     "commander": "^6.2.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

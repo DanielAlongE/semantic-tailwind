@@ -14,5 +14,8 @@
   "dependencies": {
     "semantic-tailwind-core": "^0.0.23",
     "semantic-tailwind-react": "^0.0.23"
+  },
+  "publishConfig": {
+    "access": "restricted"
   }
 }

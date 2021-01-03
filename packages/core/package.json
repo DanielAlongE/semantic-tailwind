@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/DanielAlongE/semantic-tailwind/issues"
   },
-  "homepage": "https://github.com/DanielAlongE/semantic-tailwind#readme"
+  "homepage": "https://github.com/DanielAlongE/semantic-tailwind#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }
