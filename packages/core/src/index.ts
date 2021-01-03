@@ -1,4 +1,4 @@
-export { getConfig } from "./lib/config-handler"
+export * from "./lib"
 
 export default function (){
   console.log('Hello')
