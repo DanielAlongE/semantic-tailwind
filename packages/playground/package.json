@@ -1,6 +1,6 @@
 {
   "name": "semantic-tailwind-playground",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -13,8 +13,8 @@
   },
   "homepage": "https://github.com/DanielAlongE/semantic-tailwind#readme",
   "dependencies": {
-    "semantic-tailwind-core": "^0.0.23",
-    "semantic-tailwind-react": "^0.0.23"
+    "semantic-tailwind-core": "^0.0.24",
+    "semantic-tailwind-react": "^0.0.24"
   },
   "publishConfig": {
     "access": "restricted"

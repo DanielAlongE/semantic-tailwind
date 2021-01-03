@@ -1,6 +1,6 @@
 {
   "name": "semantic-tailwind",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "description": "",
   "main": "index.js",
   "bin": {
@@ -10,7 +10,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "prepare" : "npm run build"
+    "prepare": "npm run build"
   },
   "author": "Dan Alonge <https://twitter.com/DanAlongE>",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "url": "https://github.com/DanielAlongE/semantic-tailwind/issues"
   },
   "homepage": "https://github.com/DanielAlongE/semantic-tailwind#readme",
-    "dependencies": {
+  "dependencies": {
     "next": "^10.0.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
