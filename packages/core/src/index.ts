@@ -1,5 +1,5 @@
-export * from "./lib"
+export * from './lib'
 
-export default function (){
+export default function () {
   console.log('Hello')
 }

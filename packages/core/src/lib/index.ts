@@ -1,5 +1,5 @@
-export * from "./component-handler"
-export * from "./config-handler"
-export * from "./template-maker"
-export * from "./type-check"
-export * as fileHandler from "./file-handler"
+export * from './component-handler'
+export * from './config-handler'
+export * from './template-maker'
+export * from './type-check'
+export * as fileHandler from './file-handler'

@@ -4,86 +4,86 @@ import { ComponentFactory } from 'semantic-tailwind-react'
 interface CustomThreeProps extends ButtonHTMLAttributes<unknown> {
   primary?: boolean
   size?: 'mini' | 'small' | 'large'
-  
+
   as?: React.FC<any> | string
 }
 
-// CustomThree Comp comes here -- 
+// CustomThree Comp comes here --
 const CustomThree = ComponentFactory({
-  "baseClass": "",
-  "as": "button",
-  "directives": {
-    "primary": "",
-    "size": {
-      "mini": [
-        "text-xs"
+  baseClass: '',
+  as: 'button',
+  directives: {
+    primary: '',
+    size: {
+      mini: [
+        'text-xs'
       ],
-      "small": [
-        "text-sm"
+      small: [
+        'text-sm'
       ],
-      "large": [
-        "text-lg"
+      large: [
+        'text-lg'
       ]
     }
   },
-  "name": "Custom.Three"
+  name: 'Custom.Three'
 }) as React.FC<CustomThreeProps>
 
 interface CustomTwoProps extends ButtonHTMLAttributes<unknown> {
   primary?: boolean
   size?: 'mini' | 'small' | 'large'
-  
+
   as?: React.FC<any> | string
 }
 
-// CustomTwo Comp comes here -- 
+// CustomTwo Comp comes here --
 const CustomTwo = ComponentFactory({
-  "baseClass": "",
-  "as": "button",
-  "directives": {
-    "primary": "",
-    "size": {
-      "mini": [
-        "text-xs"
+  baseClass: '',
+  as: 'button',
+  directives: {
+    primary: '',
+    size: {
+      mini: [
+        'text-xs'
       ],
-      "small": [
-        "text-sm"
+      small: [
+        'text-sm'
       ],
-      "large": [
-        "text-lg"
+      large: [
+        'text-lg'
       ]
     }
   },
-  "name": "Custom.Two"
+  name: 'Custom.Two'
 }) as React.FC<CustomTwoProps>
 
 interface CustomOneProps extends ButtonHTMLAttributes<unknown> {
   primary?: boolean
   size?: 'mini' | 'small' | 'large' | string
-  
+
   as?: React.FC<any> | string
 }
 
-// CustomOne Comp comes here -- 
+// CustomOne Comp comes here --
 const CustomOne = ComponentFactory({
-  "baseClass": "",
-  "as": "button",
-  "directives": {
-    "primary": "",
-    "size": {
-      "mini": [
-        "text-xs"
+  baseClass: '',
+  as: 'button',
+  directives: {
+    primary: '',
+    size: {
+      mini: [
+        'text-xs'
       ],
-      "small": [
-        "text-sm"
+      small: [
+        'text-sm'
       ],
-      "large": [
-        "text-lg"
+      large: [
+        'text-lg'
       ],
-      "string": ""
+      string: ''
     }
   },
-  "name": "Custom.One"
+  name: 'Custom.One'
 }) as React.FC<CustomOneProps>
 
 interface CustomComponent {
