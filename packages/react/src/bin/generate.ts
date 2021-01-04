@@ -1,16 +1,17 @@
 /* eslint-disable prefer-promise-reject-errors */
 /* eslint-disable for-direction */
-import { isObject, isString, isNumeric, templateMaker, fileHandler, componentObjectToArray } from 'semantic-tailwind-core'
+import { isObject, isString, isNumeric, templateMaker, componentObjectToArray } from 'semantic-tailwind-core'
+import { fileHandler } from 'semantic-tailwind-cli'
 import { ComponentData } from 'semantic-tailwind-core/src/types'
 import * as path from 'path'
-import getComponentInterface from './component-interface'
+import getComponentInterface from '../lib/component-interface'
 
 function isDefaultComp (c:string) {
   return c && c.indexOf('.') === -1
 }
 
 function directiveToTypes (comp: ComponentData) {
-  let result = ''
+  // let result = ''
 
   const directives = comp.directives || {}
 
@@ -22,25 +23,26 @@ function directiveToTypes (comp: ComponentData) {
       return ['number', 'string', 'boolean'].includes(k as string) || isAllNumbers ? k : `'${k}'`
     })
 
-    return keyList.join(' | ') + '\n'
+    return keyList.join(' | ') // + '\n'
   }
 
-  Object.entries(directives).forEach(([directive, value]) => {
-    result += `${directive}?: `
+  return Object.entries(directives).map(([directive, value]) => {
+    let result = `${directive}?: `
     if (Array.isArray(value) || isString(value)) {
-      result += 'boolean\n'
+      result += 'boolean' // \n
     } else if (isObject(value)) {
       result += objKeyToType(<Record<string, unknown>>value)
     } else {
       result += 'any'
     }
-  })
-  return result
+
+    return result
+  }).join('\n')
 }
 
 function generateComponentFile (groupName: string, components: ComponentData[]) {
   const t = templateMaker()
-  const tab = 0
+  let tab = 0
 
   // [name, flatName, type]
   const compProperties: [string, string, string][] = []
@@ -65,10 +67,11 @@ function generateComponentFile (groupName: string, components: ComponentData[]) 
     t.addLine('')
 
     t.addLine(`interface ${propInterface} extends ${interfaceName}<unknown> {`, tab)
-    const _d = directiveToTypes(c)
-    t.addMultiLine(_d ? `${_d}` : '[key: string]: unknown', tab + 1)
-    t.addLine('as?: React.FC<any> | string', tab + 1)
-    t.addLine('}', tab)
+    t.addMultiLine(directiveToTypes(c), tab += 1) // '[key: string]: unknown'
+    c.forwardRef && t.addLine('ref?: unknown', tab)
+    t.addLine('as?: React.FC<any> | string', tab)
+    t.addLine('[key: string]: any', tab)
+    t.addLine('}', tab -= 1)
 
     if (!isDefault) {
       compProperties.push([name, flatName, propInterface])
