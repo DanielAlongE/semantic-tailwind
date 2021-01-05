@@ -65,7 +65,7 @@ export function getConfigObject (defaultConfig:any = {}, fileName = 'semantic-ta
   try {
     configObj = require(filePath)
   } catch (error) {
-    console.error(error)
+    // console.warn(`${fileName} not found in cwd`)
   }
 
   return { ...defaultConfig, ...configObj }
