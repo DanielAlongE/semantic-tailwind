@@ -70,7 +70,8 @@
     },
     "Three": {
       "baseClass": "",
-      "as": "button",
+      "as": "Button",
+      "forwardRef": true,
       "directives": {
         "primary": "",
         "size": {
