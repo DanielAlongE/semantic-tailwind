@@ -19,7 +19,8 @@ export default function getComponentInterface (as: string) {
     img: ['ImgHTMLAttributes', 'react'],
     table: ['TableHTMLAttributes', 'react'],
     td: ['TdHTMLAttributes', 'react'],
-    th: ['ThHTMLAttributes', 'react']
+    th: ['ThHTMLAttributes', 'react'],
+    Button: ['ButtonHTMLAttributes', 'react']
   }
 
   if (as in dict) {
