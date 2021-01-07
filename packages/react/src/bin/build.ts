@@ -1,6 +1,6 @@
 import * as path from 'path'
 import { getConfigObject } from 'semantic-tailwind-core'
-import generate from '../lib/generate'
+import generate from './generate'
 
 export default function build (output?:string) {
   const configObj = getConfigObject()
