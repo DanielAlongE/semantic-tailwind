@@ -2,8 +2,9 @@ import React, { HTMLAttributes } from 'react'
 import { ComponentFactory } from 'semantic-tailwind-react'
 
 interface GridColumnProps extends HTMLAttributes<unknown> {
-  [key: string]: unknown
+
   as?: React.FC<any> | string
+  [key: string]: any
 }
 
 // GridColumn Comp comes here --
@@ -15,8 +16,9 @@ const GridColumn = ComponentFactory({
 }) as React.FC<GridColumnProps>
 
 interface GridRowProps extends HTMLAttributes<unknown> {
-  [key: string]: unknown
+
   as?: React.FC<any> | string
+  [key: string]: any
 }
 
 // GridRow Comp comes here --
@@ -30,8 +32,8 @@ const GridRow = ComponentFactory({
 interface GridProps extends HTMLAttributes<unknown> {
   widths?: 1 | 3 | 2.58 | 4.0
   cols?: '1' | '2' | '3' | '4' | 'full'
-
   as?: React.FC<any> | string
+  [key: string]: any
 }
 
 interface GridComponent extends React.FC<GridProps> {

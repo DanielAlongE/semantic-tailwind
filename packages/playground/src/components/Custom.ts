@@ -4,14 +4,16 @@ import { ComponentFactory } from 'semantic-tailwind-react'
 interface CustomThreeProps extends ButtonHTMLAttributes<unknown> {
   primary?: boolean
   size?: 'mini' | 'small' | 'large'
-
+  ref?: unknown
   as?: React.FC<any> | string
+  [key: string]: any
 }
 
 // CustomThree Comp comes here --
 const CustomThree = ComponentFactory({
   baseClass: '',
-  as: 'button',
+  as: 'Button',
+  forwardRef: true,
   directives: {
     primary: '',
     size: {
@@ -32,8 +34,8 @@ const CustomThree = ComponentFactory({
 interface CustomTwoProps extends ButtonHTMLAttributes<unknown> {
   primary?: boolean
   size?: 'mini' | 'small' | 'large'
-
   as?: React.FC<any> | string
+  [key: string]: any
 }
 
 // CustomTwo Comp comes here --
@@ -60,8 +62,8 @@ const CustomTwo = ComponentFactory({
 interface CustomOneProps extends ButtonHTMLAttributes<unknown> {
   primary?: boolean
   size?: 'mini' | 'small' | 'large' | string
-
   as?: React.FC<any> | string
+  [key: string]: any
 }
 
 // CustomOne Comp comes here --
