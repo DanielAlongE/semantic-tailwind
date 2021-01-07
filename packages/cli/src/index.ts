@@ -31,4 +31,6 @@ if (require.main == module) {
   cli({})
 }
 
+export * as fileHandler from './lib/file-handler'
+
 export default cli
