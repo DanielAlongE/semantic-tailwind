@@ -1,18 +1,24 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import { getConfig } from '../../lib/config-handler'
+import { writeFile } from '../../lib'
+import { pathResolver, componentArrayToObject } from 'semantic-tailwind-core'
+
+function handleSave (data: any) {
+  const { componentFile } = getConfig()
+  const _componentFile = pathResolver(componentFile)
+
+  return writeFile(_componentFile, JSON.stringify(
+    componentArrayToObject(data || [])
+    , null, 2))
+}
+
 export default function save (req: NextApiRequest, res: NextApiResponse) {
-  // console.log(req)
-  // console.log(res)
-  console.log(process.cwd())
+  console.log('save', req.method, req.body)
 
-  let { spawn } = require('child_process')
+  const result = handleSave(req.body)
 
-  // 'node' is an executable command (can be executed without a shell)
-  // uses streams to transfer data (spawn.stout)
-  spawn = spawn('node', ['sandbox.js'])
-  spawn.stdout.on('data', function (msg: any) {
-    console.log(msg)
-    console.log(msg.toString())
-  })
+  if (result) return res.json({ message: 'file saved successfully!' })
 
-  return res.json({ one: '1', two: 2, three: 3 })
+  res.statusCode = 301
+  return res.json({ message: 'oops something when wrong!' })
 }
