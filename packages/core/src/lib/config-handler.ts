@@ -66,9 +66,9 @@ export function getComponentGroups<T = any> (comps: T[]) {
 }
 
 export function getConfigObject<T = any> (defaultConfig:any = {}, fileName = 'semantic-tailwind.config'): T {
-  const filePath = path.resolve(process.cwd(), fileName)
+  const filePath = pathResolver(fileName)
   let configObj = {}
-  console.log({ filePath })
+
   try {
     configObj = require(filePath)
   } catch (error) {
