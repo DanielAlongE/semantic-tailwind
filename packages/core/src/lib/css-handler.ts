@@ -22,7 +22,7 @@ export function getClasses (css: string) {
     // .map(c => {console.log(c); return c})
     .map(c => c ? c.match(/^([\s,]*(\.[a-zA-Z0-9:./_\\-]+))+/g) : null)
     // .map(c => c ? c.replace(/^(\s*\.([a-zA-Z0-9:/_\\-]+))+/g, "$2") : null)
-    .map(c => c?.join('')
+    .map(c => (c || []).join('')
       .replace(/[ ]+$/g, '')
       .replace(/^[ ]+/g, '')
       .replace(/[\s,]+/g, '\n')
@@ -31,13 +31,12 @@ export function getClasses (css: string) {
     .join('\n')
     .split('\n')
     .filter(c => !([null, undefined, ''].includes(c)))
-    .map(c => c?.replace(/:{2}[a-zA-Z0-9_\\-]+$/g, '') // remove ::
+    .map(c => (c || '').replace(/:{2}[a-zA-Z0-9_\\-]+$/g, '') // remove ::
       .replace(/(\\*):{1}([a-zA-Z0-9_\\-]+)$/g, handlePseudo) // :
       .replace(/(\\*):{1}([a-zA-Z0-9_\\-]+)$/g, handlePseudo)
       .replace(/\\/g, '')
     )
 
-  console.log(t)
   return t
   // return css.match(/\.-?([_a-zA-Z]+[_a-zA-Z0-9-]*)\s*\{/g) || []
 }
