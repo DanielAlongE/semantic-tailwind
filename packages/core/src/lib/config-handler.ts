@@ -1,5 +1,12 @@
 import * as path from 'path'
 
+export function pathResolver (p: string) {
+  if (path.isAbsolute(p)) {
+    return p
+  }
+  return path.resolve(process.cwd(), p)
+}
+
 export function componentArrayToObject<T = any> (componentArray: T[]) {
   const componentObject:Record<string, Record<string, T>> = {}
 
@@ -58,10 +65,10 @@ export function getComponentGroups<T = any> (comps: T[]) {
   return groups
 }
 
-export function getConfigObject (defaultConfig:any = {}, fileName = 'semantic-tailwind.config') {
+export function getConfigObject<T = any> (defaultConfig:any = {}, fileName = 'semantic-tailwind.config'): T {
   const filePath = path.resolve(process.cwd(), fileName)
   let configObj = {}
-
+  console.log({ filePath })
   try {
     configObj = require(filePath)
   } catch (error) {
