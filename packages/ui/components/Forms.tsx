@@ -347,7 +347,7 @@ function ButtonInputToggle ({
 }
 
 function MatchedKey ({ componentIndex, name }:{componentIndex: number, name: string}) {
-  // const { editObjectKey } = useComponentForm()
+  const { editObjectKey } = useComponentForm()
   const d = name.split(',').filter(x => x !== '')
   const itemRef = useRef<string[]>(d)
   const [, setRender] = useState({})
@@ -355,8 +355,8 @@ function MatchedKey ({ componentIndex, name }:{componentIndex: number, name: str
   const reRender = () => setRender({})
 
   const handleSubmit = () => {
-    // editObjectKey(`components.${componentIndex}.matched`, name, keyRef.current.join(','))
-    console.log(itemRef.current.join(','))
+    editObjectKey(`components.${componentIndex}.matched`, name, itemRef.current.join(','))
+    // console.log(itemRef.current.join(','))
   }
 
   const getDirectiveIndex = (directive: string) => {
@@ -549,7 +549,8 @@ function useComponentForm () {
       name: uniqueComponentName(name),
       baseClass: [],
       as: 'div',
-      directives: {}
+      directives: {},
+      forwardRef: false
     }
 
     setStateField('components', (s:any[]) => {
@@ -677,8 +678,11 @@ function useComponentForm () {
 
 function ComponentInfo ({ index }:{index:number}) {
   const path = `components.${index}`
-  const { stateRef } = useSubscribedState()
-  const data: ComponentData = dotProp.get(stateRef.current, path, {})
+  const { getStateField } = useSubscribedState()
+  const data: ComponentData = getStateField(path, {})
+  const elements: string[] = getStateField('elements')
+  const { as = 'div' } = data
+
   const { editObjectValue, deleteComponent } = useComponentForm()
 
   const updateName = (value: string) => {
@@ -686,6 +690,8 @@ function ComponentInfo ({ index }:{index:number}) {
       editObjectValue(path, 'name', value)
     }
   }
+
+  const updateRenderAs = (value: string) => editObjectValue(path, 'as', value)
 
   return (
     <Grid className="group divide-y divide-gray-400" cols="12">
@@ -701,6 +707,13 @@ function ComponentInfo ({ index }:{index:number}) {
       <Grid.Column className="p-2 md:col-span-1" col="1">
         <Button onClick={() => deleteComponent(index)} rounded color="red" type="button">-</Button>
       </Grid.Column>
+      <Grid.Column className="p-2 md:col-span-4" col="12">
+        <label>Render As:
+          <select defaultValue={as} onChange={e => { updateRenderAs(e.target.value) }}>
+            {elements.map(x => <option key={x}>{x}</option>)}
+          </select>
+        </label>
+      </Grid.Column>
     </Grid>
   )
 }
@@ -709,33 +722,25 @@ function ComponentForm ({ index }:{index:number}) {
   const [active, setActive] = useState(0)
   const toggleActive = (id: number) => setActive(x => x === id ? -1 : id)
   const panes = [
-    { label: 'Main', render () { return <ComponentInfo index={index} /> } },
-    { label: 'Directives', render () { return <DirectivesForm componentIndex={index} /> } },
-    {
-      label: 'Computed',
-      render () {
-        return <ComputedForm componentIndex={index} />
-      }
-    },
-    {
-      label: 'Matched',
-      render: () => (
-        <MatchedForm componentIndex={index} />
-      )
-    },
-    { label: 'Filters', render () { return <FilterForm componentIndex={index} /> } }
+    { label: 'Main', render: <ComponentInfo index={index} /> },
+    { label: 'Directives', render: <DirectivesForm componentIndex={index} /> },
+    { label: 'Computed', render: <ComputedForm componentIndex={index} /> },
+    { label: 'Matched', render: <MatchedForm componentIndex={index} /> },
+    { label: 'Filters', render: <FilterForm componentIndex={index} /> }
   ]
+
+  // const ContentRender = ({ className, children, active = false, ...rest }: any) => <div className={`${className} ${active ? '' : 'hidden'}`}>{children}</div>
   return (
       <Card rounded color="red">
         <Card.Header>Component {index}</Card.Header>
         <Accordion className="m-2 border border-gray-600">
-          {panes.map(({ label, render: Comp }, i) => {
+          {panes.map(({ label, render }, i) => {
             const isActive = active === i
             return (
             <React.Fragment key={`pane-${index}-${i}`}>
               <Accordion.Title basic onClick={() => toggleActive(i)} active={ isActive }>{label}</Accordion.Title>
               <Accordion.Content active={ isActive }>
-                {isActive && <Comp />}
+                {isActive && render}
               </Accordion.Content>
             </React.Fragment>)
           })}
@@ -914,14 +919,16 @@ function ClassNameSuggestion () {
 interface Data {
   classes: string[]
   components: any[]
+  elements: string[]
 }
 
 export default function Form ({ data }: {data: Data}) {
-  const { classes = [], components = [] } = data
+  const { classes = [], components = [], elements = [] } = data
 
   const initialState = {
     classes,
-    components
+    components,
+    elements
   }
   return (
     <Provider initialState={initialState}>
