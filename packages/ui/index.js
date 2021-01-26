@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 console.log("semantic-tailwind!")
 
 const { default: startServer } = require('next/dist/server/lib/start-server')
@@ -20,3 +18,5 @@ startServer({ dir }, port)
     )
     await app.prepare()
   })
+
+  // #!/usr/bin/env node
