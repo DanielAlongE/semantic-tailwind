@@ -1,4 +1,5 @@
 import * as path from 'path'
+import { requireNoCache } from './require-handler'
 
 export function pathResolver (p: string) {
   if (path.isAbsolute(p)) {
@@ -65,15 +66,53 @@ export function getComponentGroups<T = any> (comps: T[]) {
   return groups
 }
 
+function configComponentPlugin (configObj: any) {
+  const { components, componentFile = 'semantic-tailwind.components.json' } = configObj
+  if (!components) {
+    try {
+      const _componentFile = pathResolver(componentFile)
+      return { ...configObj, components: requireNoCache(_componentFile) }
+    } catch (error) {
+
+    }
+  }
+
+  return { ...configObj, components: {} }
+}
+
+function configElementPlugin (configObj: any) {
+  const { _elements = {}, elements = {}, ...rest } = configObj
+
+  if (_elements || elements) {
+    return { ...rest, elements: { ..._elements, ...elements } }
+  }
+  return configObj
+}
+
+function configPluginHandler (configObj: any, plugins: Array<(o: any) => any>) {
+  plugins.forEach(p => {
+    configObj = p(configObj)
+  })
+
+  return configObj
+}
+
 export function getConfigObject<T = any> (defaultConfig:any = {}, fileName = 'semantic-tailwind.config'): T {
   const filePath = pathResolver(fileName)
+  console.log(`_filePath: ${filePath}`)
   let configObj = {}
 
   try {
     configObj = require(filePath)
   } catch (error) {
-    // console.warn(`${fileName} not found in cwd`)
+    console.log(`oops an error occured [${error.name}]`)
+    console.log(process.cwd())
+    console.log(__filename)
   }
 
-  return { ...defaultConfig, ...configObj }
+  // console.log(Object.keys(configObj))
+
+  return configPluginHandler(
+    { ...defaultConfig, ...configObj },
+    [configComponentPlugin, configElementPlugin])
 }
