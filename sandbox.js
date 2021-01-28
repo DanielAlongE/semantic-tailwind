@@ -1,4 +1,7 @@
-const fileHandler = require("./packages/cli")
-console.log(fileHandler)
-// fileHandler.mkdir("packages-all/packages-one/packages-two").then(console.log, console.log)
+const { getConfigObject } = require("./packages/core")
+
+
+// console.log(Object.keys(require.cache))
+console.log('-------------------------------------------------------')
+console.log(getConfigObject())
 
