@@ -4,7 +4,7 @@ import { isObject, isString, isNumeric, templateMaker, componentObjectToArray } 
 import { fileHandler } from 'semantic-tailwind-cli'
 import { ComponentData } from 'semantic-tailwind-core/src/types'
 import * as path from 'path'
-import getComponentInterface from '../lib/component-interface'
+import { getComponentInterface } from '../lib/component-interface'
 
 function isDefaultComp (c:string) {
   return c && c.indexOf('.') === -1
@@ -47,6 +47,11 @@ function generateComponentFile (groupName: string, components: ComponentData[]) 
   // [name, flatName, type]
   const compProperties: [string, string, string][] = []
 
+  t.addImport('semantic-tailwind-react').named(['ComponentFactory', 'getConfig'])
+
+  t.addLine('')
+  t.addLine('const configObj = getConfig()')
+
   for (let i = components.length - 1; i >= 0; i -= 1) {
     const c = components[i]
     const { name = '', as = '' } = c
@@ -59,15 +64,15 @@ function generateComponentFile (groupName: string, components: ComponentData[]) 
     t.addImport('react').default('React')
     t.addImport(interfacePath).named([interfaceName])
 
-    t.addImport('semantic-tailwind-react').named(['ComponentFactory'])
-
     const flatName = name.replace('.', '')
     const propInterface = flatName + 'Props'
 
     t.addLine('')
 
     t.addLine(`interface ${propInterface} extends ${interfaceName}<unknown> {`, tab)
-    t.addMultiLine(directiveToTypes(c), tab += 1) // '[key: string]: unknown'
+    const _d = directiveToTypes(c)
+    tab += 1
+    _d && t.addMultiLine(_d, tab)
     c.forwardRef && t.addLine('ref?: unknown', tab)
     t.addLine('as?: React.FC<any> | string', tab)
     t.addLine('[key: string]: any', tab)
@@ -75,9 +80,8 @@ function generateComponentFile (groupName: string, components: ComponentData[]) 
 
     if (!isDefault) {
       compProperties.push([name, flatName, propInterface])
-
-      t.addLine(`\n// ${flatName} Comp comes here -- `)
-      t.addLine(`const ${flatName} = ComponentFactory(${fileHandler.jsonToString(c)}) as React.FC<${propInterface}>`)
+      t.addLine(`\n// ${flatName} Comp comes here --`)
+      t.addLine(`const ${flatName} = ComponentFactory(${fileHandler.jsonToString(c)}, configObj) as React.FC<${propInterface}>`)
     }
 
     // root component expected to be on index 0
@@ -93,7 +97,7 @@ function generateComponentFile (groupName: string, components: ComponentData[]) 
 
         t.addLine('')
         t.addLine('// eslint-disable-next-line @typescript-eslint/no-explicit-any')
-        t.addLine(`const ${groupName}:any = ComponentFactory(${fileHandler.jsonToString(c)})`)
+        t.addLine(`const ${groupName}:any = ComponentFactory(${fileHandler.jsonToString(c)}, configObj)`)
       } else {
         t.addLine('')
         t.addLine(`interface ${groupName}Component {`, tab)
@@ -132,6 +136,8 @@ export default async function generate (configObject: any, outDir:string) {
   if (!_outDir) {
     return Promise.reject('outDir not supplied')
   }
+
+  console.log(`outDir: ${_outDir}`)
 
   const isDir = await fileHandler.mkdir(_outDir)
 
