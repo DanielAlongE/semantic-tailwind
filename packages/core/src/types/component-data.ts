@@ -4,6 +4,8 @@ export type Directive = Record<string, ClassProp | string>
 
 export type Directives = Record<string, Directive | ClassProp>
 
+export type Computed = Record<string, string>
+
 export interface ComponentData {
   name?: string
   as?: string
@@ -11,6 +13,6 @@ export interface ComponentData {
   baseClass: ClassProp
   directives?: Directives
   matched?: Record<string, string>
-  computed?: Record<string, string>
+  computed?: Computed
   filters?: Record<string, Array<[string, string]>>
 }

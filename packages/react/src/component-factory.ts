@@ -3,18 +3,19 @@ import { isString } from 'semantic-tailwind-core'
 import { ComponentData } from 'semantic-tailwind-core/src/types'
 import { getElementControl } from './elements'
 import { getValidHtmlProp, prepareComponentProps } from './lib/helper'
+import { Config } from './types'
 
-function getElementArgs ({ as, ...props }: any, data: ComponentData, comp?: React.FC<any>) {
-  const p = prepareComponentProps(props, data)
-  const Element = as || comp || getElementControl(data.as || 'div')
+function getElementArgs ({ props: { as, ..._p }, data, configObj }:{ props: any, data:ComponentData, configObj?: Config }) {
+  const p = prepareComponentProps(_p, data)
+  const Element = as || getElementControl(data.as || 'div', configObj)
   const _props = isString(Element) ? getValidHtmlProp(p) : p
   return [Element, _props]
 }
 
-export function ComponentFactory (data: ComponentData, comp?: React.FC<any>) {
+export function ComponentFactory (data: ComponentData, configObj: Config) {
   if (data.forwardRef) {
     return React.forwardRef(({ children = null, ...props }: any, ref:unknown) => {
-      const [Element, _props] = getElementArgs(props, data, comp)
+      const [Element, _props] = getElementArgs({ props, data, configObj })
       if (ref) {
         _props.ref = ref
       }
@@ -22,7 +23,7 @@ export function ComponentFactory (data: ComponentData, comp?: React.FC<any>) {
     })
   }
   return ({ children = null, ...props }: any) => {
-    const [Element, _props] = getElementArgs(props, data, comp)
+    const [Element, _props] = getElementArgs({ props, data, configObj })
     return React.createElement(Element, _props, children)
   }
 }
