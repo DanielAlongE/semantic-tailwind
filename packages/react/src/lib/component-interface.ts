@@ -1,4 +1,4 @@
-export default function getComponentInterface (as: string) {
+export function getComponentInterface (as: string) {
   const dict = {
     html: ['HTMLAttributes', 'react'],
     button: ['ButtonHTMLAttributes', 'react'],
